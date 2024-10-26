@@ -3,7 +3,7 @@ using namespace std;
 
 void Q1()
 {
-
+	// hihihi
 }
 
 void Q2()
