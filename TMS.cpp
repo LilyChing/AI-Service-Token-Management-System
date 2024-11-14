@@ -1,6 +1,25 @@
 #include <iostream>
 using namespace std;
 
+class User
+{
+public:
+	User();
+	
+
+private:
+
+};
+
+class Transaction
+{
+public:
+	Transaction();
+
+
+private:
+
+};
 void Q1()
 {
   // Lily Lily Lily
