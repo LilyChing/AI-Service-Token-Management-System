@@ -81,7 +81,7 @@ void Q6() //Credits and Exit
 			cout << "FUNG Ho Ming" << setw(6) << "24059970S 102" << endl;
 			cout << "AU-YEUNG Wing Lam" << setw(1) << "24063299S 102" << endl;
 			cout << "LAM Wai Ha" << setw(8) <<"24049348S 102" << endl;
-			cout << "WONG Sze Wun"<<setw(2) <<"24059631S 102" << endl;
+			cout << "WONG Sze Wun"<<setw(6) <<"24059631S 102" << endl;
 		}
 
 		else {
