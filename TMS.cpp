@@ -8,10 +8,8 @@ class User
 public:
 	User();
 
-	bool checkBoolFromUser();
-
 private:
-
+	bool endProgram = false;
 };
 
 class Transaction
@@ -48,47 +46,38 @@ void Q5()
 
 }
 
-bool checkBoolFromUser(const char input) {
-
-	if (input == 'Y' || input == 'y') {
-		return true;
-	}
-
-	else if (input == 'N' || input == 'n') {
-		return false;
-	}
-
-	else {
-		cout << "Wrong input. Only Y/N is accepted. Please retry." << endl;
-		cin.clear();
-		cin.ignore(1000000, '\n');
-	}
-}
-
+bool endProgram = false;
 
 void Q6() //Credits and Exit
 {
 	char userInput;
 
-	cout << "Show the credit? (Y / N) ";
-	cin >> userInput;
+	while (true) {
+		cout << "Show the credit? (Y / N) ";
+		cin >> userInput;
 
-		bool result = checkBoolFromUser(userInput);
-		if (result) { 
-			cout << setw(24) <<"Credit" << endl;
-			cout << left << setw(18) <<"CHING Yan Lee" << "\t24050083S\t102" << endl;
-			cout << left << setw(18) <<"LEE Cheuk Him" << "\t24076812S\t102" << endl;
-			cout << left << setw(18) << "FUNG Ho Ming" <<  "\t24059970S\t102" << endl;
+		if (userInput == 'y' || userInput == 'Y') {
+			cout << endl<< setw(24) << "~ Credit ~" << endl;
+			cout << left << setw(18) << "Name:" << "\tStudent ID:\tClass:" << endl << endl;
+			cout << left << setw(18) << "CHING Yan Lee" << "\t24050083S\t102" << endl;
+			cout << left << setw(18) << "LEE Cheuk Him" << "\t24076812S\t102" << endl;
+			cout << left << setw(18) << "FUNG Ho Ming" << "\t24059970S\t102" << endl;
 			cout << left << setw(18) << "AU-YEUNG Wing Lam" << "\t24063299S\t102" << endl;
-			cout << left << setw(18) << "LAM Wai Ha"  <<"\t24049348S\t102" << endl;
-			cout << left << setw(18) << "WONG Sze Wun"<<"\t24059631S\t102" << endl;
+			cout << left << setw(18) << "LAM Wai Ha" << "\t24049348S\t102" << endl;
+			cout << left << setw(18) << "WONG Sze Wun" << "\t24059631S\t102" << endl << endl;
+		}
+
+		else if (userInput == 'n' || userInput == 'N') {
+			return;
 		}
 
 		else {
-			return;
+			cout << endl << "Wrong input. Only Y/N is accepted. Please retry." << endl << endl;
+			cin.clear();
+			cin.ignore(1000000, '\n');
 		}
+	}
 }
-
 
 int main()
 {
@@ -117,13 +106,16 @@ int main()
 		case '4': Q4(); break;
 		case '5': Q5(); break;
 		case '6': Q6(); break;
+			if (!endProgram) {
+			continue;
+			}
 		case '7': break;
 		default:
 			cout << "No such Option " << prog_choice << endl;
 			break;
 		}
-	} while (prog_choice != '6');
+	} while (prog_choice != '6'|| !endProgram);
 
-	cout << "Program terminates. Good bye!" << endl;
+	cout << "System terminates. Good bye!" << endl;
 	return 0;
 }
