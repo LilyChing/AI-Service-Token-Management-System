@@ -70,18 +70,18 @@ void Q6() //Credits and Exit
 {
 	char userInput;
 
-	cout << "Show the credit? (Y / N)" << endl;
+	cout << "Show the credit? (Y / N) ";
 	cin >> userInput;
 
 		bool result = checkBoolFromUser(userInput);
 		if (result) { 
-			cout << setw(12) <<"Credit" << endl;
-			cout << "CHING Yan Lee" << setw(5) << "24050083S 102" << endl;
-			cout << "LEE Cheuk Him" << setw(5) << "24076812S 102" << endl;
-			cout << "FUNG Ho Ming" << setw(6) << "24059970S 102" << endl;
-			cout << "AU-YEUNG Wing Lam" << setw(1) << "24063299S 102" << endl;
-			cout << "LAM Wai Ha" << setw(8) <<"24049348S 102" << endl;
-			cout << "WONG Sze Wun"<<setw(6) <<"24059631S 102" << endl;
+			cout << setw(24) <<"Credit" << endl;
+			cout << left << setw(18) <<"CHING Yan Lee" << "\t24050083S\t102" << endl;
+			cout << left << setw(18) <<"LEE Cheuk Him" << "\t24076812S\t102" << endl;
+			cout << left << setw(18) << "FUNG Ho Ming" <<  "\t24059970S\t102" << endl;
+			cout << left << setw(18) << "AU-YEUNG Wing Lam" << "\t24063299S\t102" << endl;
+			cout << left << setw(18) << "LAM Wai Ha"  <<"\t24049348S\t102" << endl;
+			cout << left << setw(18) << "WONG Sze Wun"<<"\t24059631S\t102" << endl;
 		}
 
 		else {
