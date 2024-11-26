@@ -9,7 +9,7 @@ public:
 	User();
 
 private:
-	bool endProgram = false;
+	bool endProgram;
 };
 
 class Transaction
@@ -38,7 +38,36 @@ void Q3()
 
 void Q4()
 {
+	char action;
 
+	do{
+	cout << "\n\n";
+	cout << "Action for User ID : " << endl;
+	cout << "*****User View Menu*****" << endl;
+	cout << "[1] Select AI Service" << endl;
+	cout << "[2] Purchase Tokens" << endl;
+	cout << "[3] Edit Profile" << endl;
+	cout << "[4] Show Transaction History" << endl;
+	cout << "[5] Return to Main Menu" << endl;
+	cout << "**************************" << endl;
+	cout << "Option(1 - 5) :";
+	cin >> action;
+	cout << "\n\n";
+
+	
+	switch (action) {
+	case '1': Q1(); break;
+	case '2': Q2(); break;
+	case '3': Q3(); break;
+	case '4': Q4(); break;
+	case '5':endProgram = true;
+		break;
+		default:
+		cout << "No such Option " << action << "\n\n";
+		break;
+	}
+	}while (action != '5' || !endProgram);
+	return;
 }
 
 void Q5()
@@ -72,7 +101,7 @@ void Q6() //Credits and Exit
 		}
 
 		else {
-			cout << endl << "Wrong input. Only Y/N is accepted. Please retry." << endl << endl;
+			cout << endl << "Wrong input. Only Y/N is accepted. Please retry." << "\n\n";
 			cin.clear();
 			cin.ignore(1000000, '\n');
 		}
