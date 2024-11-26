@@ -42,7 +42,7 @@ void Q4()
 
 	do{
 	cout << "\n\n";
-	cout << "Action for User ID : " << endl;
+	cout << "Action for User ID : " << endl; // user name variable is tbc
 	cout << "*****User View Menu*****" << endl;
 	cout << "[1] Select AI Service" << endl;
 	cout << "[2] Purchase Tokens" << endl;
@@ -55,7 +55,7 @@ void Q4()
 	cout << "\n\n";
 
 	
-	switch (action) {
+	switch (action) { //function name for ACTION need to revise
 	case '1': Q1(); break;
 	case '2': Q2(); break;
 	case '3': Q3(); break;
