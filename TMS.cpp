@@ -6,9 +6,85 @@ using namespace std;
 class User
 {
 public:
-	User();
+	User(char uid, int u_type, int u_tokenBalance, int u_autoTopUp) {
+		userID = uid;
+		type = u_type; // 0 refers to Trial , 1 refers to Full, 2 refers to Student
+		tokenBalance = u_tokenBalance;
+		autoTopup = u_autoTopUp; // autoTopUp 0 refers to No, 1 refers to include auto top up
+		isDeleted = 0; //isDeleted  0 refers to exists, 1 refers to deleted
+		money = 100;
+	}
+
+	//Getter & Setter
+	char[] getUserID() { // How to return char array
+		return userID;
+	}
+
+	int getType() {
+		return type;
+	}
+
+	int getTokenBalance() {
+		return tokenBalance;
+
+	}
+
+	int getAutoTopup() {
+		return autoTopup;
+	}
+
+	int getIsDeleted() {
+		return isDeleted;
+	}
+
+	int getMoney() {
+		return money;
+	}
+
+	void credit(int amount) {
+		money += amount;
+	}
+
+	void debit(int amount) {
+		money -= amount;
+	}
+
+	void setType(int accType) {
+		type = accType;
+	}
+
+	void setAutoTopup(int topup) {
+		autoTopup = topup;
+	}
+
+	void deleteUser() {
+		isDeleted = 1;
+	}
+
+	void purchaseToken(int token) {
+		if (money > token * 2) {
+			//add Token
+			tokenBalanace += token;
+			// money -= token * 2;
+			debit(token * 2);
+		}
+		else {
+			cout << "insufficient cash. Please come back after top up." << endl;
+		}
+	}
+
+
+
+
+
 
 private:
+	char userID[50];
+	int type;
+	int tokenBalance;
+	int autoTopup;
+	int isDeleted;
+	int money; // cash balance
 	bool endProgram;
 };
 
