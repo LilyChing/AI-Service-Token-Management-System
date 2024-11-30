@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <string>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 
@@ -170,7 +171,23 @@ void displayData(const string arr[rows][cols], int n) {
 
 void Q3()
 {
+    vector<string> userList = {"1", "2", "3"};
+    string targetID;
 
+    cout << "Enter the ID to search for: ";
+    cin >> targetID;
+
+    // Use std::find to search for targetID in userList
+    auto it = find(userList.begin(), userList.end(), targetID);
+
+    // Check if the ID was found
+    if (it != userList.end()) {
+        cout << "I find it and gonna delete it." << endl;
+        // Optionally, you can remove the ID from the list
+        userList.erase(it); // Remove the found ID
+    } else {
+        cout << "I can't find??" << endl;
+    }
 }
 
 void imageRecognition()
