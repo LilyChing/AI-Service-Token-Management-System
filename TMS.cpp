@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <string>
 #include <vector>
-#include <algorithm>
+//#include <algorithm>
 using namespace std;
 
 
@@ -112,10 +112,10 @@ private:
 bool endProgram = false;
 vector<User> userList;
 
-void displayData(vector<User> array, int size) {
+void displayData(vector<User> array) {
 	cout << "\nShow User Records:" << endl;
 	cout << left << setw(50) << "User ID " << setw(10) << "Type" << setw(15) << "Token Balance" << setw(10) << "Auto Top-up" << endl;
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < array.size(); i++) {
 		cout << left << setw(50) << array[i].getUserID() << setw(10) << array[i].getType() << setw(15) << array[i].getTokenBalance() << setw(10) << array[i].getAutoTopup() << endl;
 	}
 }
@@ -130,7 +130,7 @@ void initializeUser()
 	for (int i = 0; i < 10; i++) {
 		userList.push_back(User(userID[i], type[i], tokenBalance[i], autoTopup[i]));
 	}
-	displayData(userList, userList.size());
+	displayData(userList);
 }
 
 void swap(string& a, string& b) {
@@ -149,32 +149,48 @@ void showUserRecords() {
 		for (size_t j = 0; j < userList.size() - 1; ++j) {
 			if (userList[j].getUserID() > userList[j + 1].getUserID()) {
 				swap(userList[j], userList[j + 1]);
-			} 
-		} 
+			}
+		}
 	}
-
-	displayData(userList, userList.size());
+	displayData(userList);
 }
 
 void Q3()
 {
-    vector<string> userList = {"1", "2", "3"};
-    string targetID;
+	//vector<string> userList = { "1", "2", "3" };
+	//string targetID;
 
-    cout << "Enter the ID to search for: ";
-    cin >> targetID;
+	//cout << "Enter the ID to search for: ";
+	//cin >> targetID;
 
-    // Use std::find to search for targetID in userList
-    auto it = find(userList.begin(), userList.end(), targetID);
+	//// Use std::find to search for targetID in userList
+	//auto it = find(userList.begin(), userList.end(), targetID);
 
-    // Check if the ID was found
-    if (it != userList.end()) {
-        cout << "I find it and gonna delete it." << endl;
-        // Optionally, you can remove the ID from the list
-        userList.erase(it); // Remove the found ID
-    } else {
-        cout << "I can't find??" << endl;
-    }
+	//// Check if the ID was found
+	//if (it != userList.end()) {
+	//	cout << "I find it and gonna delete it." << endl;
+	//	// Optionally, you can remove the ID from the list
+	//	userList.erase(it); // Remove the found ID
+	//}
+	//else {
+	//	cout << "I can't find??" << endl;
+	//}
+
+	string targetID;
+
+	cout << "Enter the ID to search for: ";
+	cin >> targetID;
+
+	for (int i = 0; i < userList.size(); i++) {
+		if (userList[i].getUserID() == targetID) {
+			cout << i << "n-th element: " << userList[i].getUserID() << endl;
+			cout << "I find it and gonna delete it." << endl;
+			userList.erase(userList.begin() + i);
+		}
+		else {
+			cout << "I can't find??" << endl;
+		}
+	}
 }
 
 void imageRecognition()
