@@ -342,7 +342,9 @@ int main()
 
 		switch (prog_choice) {
 		case '1': initializeUser(); break;
-		case '2': Q2(); break;
+		case '2': bubbleSort2D(); 
+			  displayData();
+			  break;
 		case '3': Q3(); break;
 		//case '4': Q4(); break;
 		case '5': Q5(); break;
