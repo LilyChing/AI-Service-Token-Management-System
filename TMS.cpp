@@ -123,9 +123,49 @@ void initializeUser()
 	}
 }
 
-void Q2()
-{
+const int rows = 100;
+const int cols = 4;
 
+string userInfo[rows][cols] = {
+       /*{"SkyWalker","T","20","N"},
+{ "Ocean123","T","35","N" },
+{ "Forest99","T","6","Y" },
+{ "Valley777","F","10","Y" },
+{ "Desert2022","F","25","N" },
+{ "River456","F","20","Y" },
+{ "Blaze2023","F","100","N" },
+{ "Meadow888","S","40","Y" },
+{ "Galaxy","S","15","Y" },
+{ "Storm2024","S","30","N" }*/
+
+};
+
+void bubbleSort2D(string arr[rows][cols], int n) {
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - i - 1; ++j) {
+            if (arr[j][0] > arr[j + 1][0]) {
+                // Swap rows arr[j] and arr[j + 1]
+                for (int k = 0; k < cols; ++k) {
+                    string temp = arr[j][k];
+                    arr[j][k] = arr[j + 1][k];
+                    arr[j + 1][k] = temp;
+                }
+            }
+        }
+    }
+}
+
+void displayData(const string arr[rows][cols], int n) {
+    cout << "\nShow User Records:" << endl;
+    cout << left << setw(50)<<"User ID"<< left << setw(10)<<"Type" << left << setw(15) << "Token Balance"<< left << setw(10) << "Auto Top - up" << endl;
+    for (int i = 0; i < n; ++i) {
+        if (arr[i][0] != "") { // Only print non-empty rows
+            for (int j = 0; j < 1; ++j) {
+                cout << left << setw(50)<< arr[i][0] << left << setw(10) << arr[i][1] << left << setw(15) << arr[i][2] << left << setw(10) << arr[i][3];
+            }
+            cout << endl;
+        }
+    }
 }
 
 void Q3()
