@@ -133,6 +133,23 @@ void initializeUser()
 	displayData(userList);
 }
 
+
+
+
+// for checking any exisiting userID
+
+int searchUserID(string checkID) {
+	for (int i = 0; i < userList.size(); i++)
+	{
+		if (userList[i].getUserID() == checkID)
+			return i;
+	}
+	return -1; // -1 not found, others no. is the number of userList[i]
+}
+
+
+
+
 void swap(string& a, string& b) {
 	string temp = a;
 	a = b;
@@ -176,7 +193,7 @@ void Q3()
 	//	cout << "I can't find??" << endl;
 	//}
 
-	string targetID;
+	/*string targetID;
 
 	cout << "Enter the ID to search for: ";
 	cin >> targetID;
@@ -190,8 +207,67 @@ void Q3()
 		else {
 			cout << "I can't find??" << endl;
 		}
-	}
-}
+	}*/
+
+
+	//string checkID;
+	//cout << "Please enter User ID:";
+	//cin >> checkID;
+
+	//if (searchUserID(checkID) == -1) // -1 means not exist
+	//{
+	//	for (int i = 0; i < 3; i++) // 3 chances for invalid input
+	//	{
+
+	//		cout << "Please enter your Type (T for trial account, F for full account , S for student account) : " << endl;
+	//		char newType;
+	//		cin >> newType;
+	//		if (cin.fail() || (newType != 'T' && newType != 'F' && newType != 'S')) {
+	//			cout << "Invalid input." << endl;
+	//			cin.clear(); // Clear the error state
+	//			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the rest of the line
+	//			continue;
+	//		}
+
+
+	//		cout << "Please enter your token balance:";
+	//		int newBal;
+	//		cin >> newBal;
+	//		if (newBal < 0 || cin.fail()) {
+	//			cout << "Invalid input." << endl;
+	//			cin.clear(); // Clear the error state
+	//			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the rest of the line
+	//			continue;
+	//		}
+
+
+
+	//		cout << "Please enter 1 to enable auto top-up or enter 2 to suspend autoTop-up: ";
+	//		int ans;
+	//		cin >> ans;
+	//		if (cin.fail() || (ans != 1 && ans != 2)) {
+	//			cout << "Invalid input." << endl;
+	//			cin.clear(); // Clear the error state
+	//			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the rest of the line
+	//			continue;
+	//		}
+
+	//		// the code for inserting new account into vector User List
+
+
+	//		cout << "Congratulation! Your new account is created sucessfully. ";
+	//		break;
+
+	//	}
+
+	//}
+	//else
+
+	//	cin.get();
+
+	// the code for del old account into vector User List
+
+
 
 void imageRecognition()
 {
