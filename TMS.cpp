@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <vector>
 using namespace std;
 
 
@@ -13,16 +14,6 @@ public:
 		endProgram = false;
 	}
 	User(string uid, int u_type, int u_tokenBalance, int u_autoTopUp) {
-		userID = uid;
-		type = u_type; // 0 refers to Trial , 1 refers to Full, 2 refers to Student
-		tokenBalance = u_tokenBalance;
-		autoTopup = u_autoTopUp; // autoTopUp 0 refers to No, 1 refers to include auto top up
-		isDeleted = 0; //isDeleted  0 refers to exists, 1 refers to deleted
-		money = 100;
-		endProgram = false;
-	}
-
-	void setUser(string uid, int u_type, int u_tokenBalance, int u_autoTopUp) {
 		userID = uid;
 		type = u_type; // 0 refers to Trial , 1 refers to Full, 2 refers to Student
 		tokenBalance = u_tokenBalance;
@@ -118,7 +109,7 @@ private:
 };
 
 bool endProgram = false;
-User userList[100] = {};
+vector<User> userList;
 
 void initializeUser()
 {
@@ -128,9 +119,8 @@ void initializeUser()
 	const int autoTopup[]{ 0, 0, 1, 1, 0, 1, 0, 1, 1, 0 };
 
 	for (int i = 0; i < 10; i++) {
-		userList[i].setUser(userID[i], type[i], tokenBalance[i], autoTopup[i]);
+		userList.push_back(User(userID[i], type[i], tokenBalance[i], autoTopup[i]));
 	}
-
 }
 
 void Q2()
