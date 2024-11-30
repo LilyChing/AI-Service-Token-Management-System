@@ -14,6 +14,7 @@ public:
 		autoTopup = u_autoTopUp; // autoTopUp 0 refers to No, 1 refers to include auto top up
 		isDeleted = 0; //isDeleted  0 refers to exists, 1 refers to deleted
 		money = 100;
+		endProgram = false;
 	}
 
 	//Getter & Setter
