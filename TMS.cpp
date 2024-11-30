@@ -1,12 +1,13 @@
 #include <iostream>
 #include <iomanip>
+#include <string>
 using namespace std;
 
 
 class User
 {
 public:
-	User(char uid, int u_type, int u_tokenBalance, int u_autoTopUp) {
+	User(string uid, int u_type, int u_tokenBalance, int u_autoTopUp) {
 		userID = uid;
 		type = u_type; // 0 refers to Trial , 1 refers to Full, 2 refers to Student
 		tokenBalance = u_tokenBalance;
@@ -16,7 +17,7 @@ public:
 	}
 
 	//Getter & Setter
-	char[] getUserID() { // How to return char array
+	string getUserID() { // How to return char array
 		return userID;
 	}
 
@@ -64,7 +65,7 @@ public:
 	void purchaseToken(int token) {
 		if (money > token * 2) {
 			//add Token
-			tokenBalanace += token;
+			tokenBalance += token;
 			// money -= token * 2;
 			debit(token * 2);
 		}
@@ -79,7 +80,7 @@ public:
 
 
 private:
-	char userID[50];
+	string userID;
 	int type;
 	int tokenBalance;
 	int autoTopup;
@@ -91,7 +92,7 @@ private:
 class Transaction
 {
 public:
-	Transaction();
+	//Transaction();
 
 
 private:
@@ -272,7 +273,6 @@ void Q5()
 
 }
 
-bool endProgram = false;
 
 void credits() //Credits and Exit
 {
@@ -329,7 +329,7 @@ int main()
 		case '1': Q1(); break;
 		case '2': Q2(); break;
 		case '3': Q3(); break;
-		case '4': Q4(); break;
+		//case '4': Q4(); break;
 		case '5': Q5(); break;
 		case '6': credits(); break;
 			if (!endProgram) {
