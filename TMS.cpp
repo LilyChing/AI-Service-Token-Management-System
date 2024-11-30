@@ -96,7 +96,12 @@ public:
 
 private:
 
+
+
 };
+
+bool endProgram = false;
+
 void Q1()
 {
 	// Lily Lily Lily
@@ -112,37 +117,153 @@ void Q3()
 
 }
 
-void Q4()
+void imageRecognition()
+{
+	// The 2D array refers to the charges according to different scenario
+	// [0] refers to Under 3MB
+	// [1] refers to Over 3MB
+	int charges[2][3] = { {5, 5, 4}, {-1, 8, 7} };
+	double imgSize = 0.0;
+
+	// 假設用家資料
+	int userType = 0;  // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
+	int autoTopUp = 1; // 0 refers to false 1 refers to true
+	int testUserToken = 0;
+	// Code to implement
+	cout << "Thank you for using Image Recognition!" << endl;
+	cout << "Please enter the expected Image Size you would like to recognize: ";
+	cin >> imgSize;
+	if (imgSize <= 0)
+	{
+		cout << "\nInvalid Input: Please enter a positive number." << endl;
+		return;
+	}
+	int serviceType = imgSize <= 3.0 ? 0 : 1;
+	int payment = charges[serviceType][userType];
+	// Check account Type
+	if (serviceType == 1 && userType == 0)
+	{
+		cout << "\nYou have no access for using Image Recognition for more than 3MB. \nPlease contact the administrator for upgrading your account." << endl;
+		return;
+	}
+	if (autoTopUp == 0)
+	{
+		if (testUserToken < payment)
+		{
+			cout << "\nInsufficient Token." << endl;
+			cout << "Remaining token: " << testUserToken << endl;
+			cout << "Please try again after purchasing for more tokens." << endl;
+			return;
+		}
+	}
+	if (testUserToken < payment)
+	{
+		int diff = payment - testUserToken;
+		int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
+		// autoTopUp
+		// code to implement
+	}
+	testUserToken -= payment;
+	cout << "\nImage has been recognized successfully." << endl;
+	cout << "Thank you for using AI Service - Image Recognition" << endl;
+	cout << "Remaining Token: " << testUserToken << endl
+		<< endl;
+	cout << "Enter \'q\' to return to user interface: ";
+	char operation;
+	cin >> operation;
+	return;
+}
+
+void speechToText()
+{
+	// The 2D array refers to the charges according to different scenario
+	// [0] refers to fee for first 3 minutes
+	// [1] refers to fee for after 3 minutes
+	int charges[2] = { 2, 3 };
+	int audioLength;
+
+	// 假設用家資料
+	int userType = 0;  // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
+	int autoTopUp = 1; // 0 refers to false 1 refers to true
+	int testUserToken = 0;
+	// Code to implement
+	cout << "Thank you for using Sppech to Text Transcription!" << endl;
+	cout << "Please enter the audio length of your speech: ";
+	cin >> audioLength;
+	if (audioLength <= 0)
+	{
+		cout << "\nInvalid Input: Please enter a positive integer." << endl;
+		return;
+	}
+	int payment;
+	if (audioLength <= 3)
+	{
+		payment = audioLength * charges[0];
+	}
+	else
+	{
+		payment = 3 * charges[0] + (audioLength - 3) * charges[1];
+	}
+
+	if (autoTopUp == 0)
+	{
+		if (testUserToken < payment)
+		{
+			cout << "\nInsufficient Token." << endl;
+			cout << "Remaining token: " << testUserToken << endl;
+			cout << "Please try again after purchasing for more tokens." << endl;
+			return;
+		}
+	}
+	if (testUserToken < payment)
+	{
+		int diff = payment - testUserToken;
+		int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
+		// autoTopUp
+		// code to implement
+	}
+	testUserToken -= payment;
+	cout << "\nText has been generated successfully." << endl;
+	cout << "Thank you for using AI Service - Speech to Text Transcription!" << endl;
+	cout << "Remaining Token: " << testUserToken << endl
+		<< endl;
+	cout << "Enter \'q\' to return to user interface: ";
+	char operation;
+	cin >> operation;
+	return;
+}
+
+void aiServiceMenu()
 {
 	char action;
 
-	do{
-	cout << "\n\n";
-	cout << "Action for User ID : " << endl; // user name variable is tbc
-	cout << "*****User View Menu*****" << endl;
-	cout << "[1] Select AI Service" << endl;
-	cout << "[2] Purchase Tokens" << endl;
-	cout << "[3] Edit Profile" << endl;
-	cout << "[4] Show Transaction History" << endl;
-	cout << "[5] Return to Main Menu" << endl;
-	cout << "**************************" << endl;
-	cout << "Option(1 - 5) :";
-	cin >> action;
-	cout << "\n\n";
+	do {
+		cout << "\n\n";
+		cout << "Select AI Service : " << endl; // user name variable is tbc
+		cout << "*****AI Service Menu*****" << endl;
+		cout << "[1] Image Recognition" << endl;
+		cout << "[2] Speech-to-text transcription" << endl;
+		cout << "[3] Predictive Analysis" << endl;
+		cout << "[4] Natural Language Processing (NLP)" << endl;
+		cout << "[5] Return to User View Menu" << endl;
+		cout << "**************************" << endl;
+		cout << "Option(1 - 5) :";
+		cin >> action;
+		cout << "\n\n";
 
-	
-	switch (action) { //function name for ACTION need to revise
-	case '1': Q1(); break;
-	case '2': Q2(); break;
-	case '3': Q3(); break;
-	case '4': Q4(); break;
-	case '5':endProgram = true;
-		break;
+
+		switch (action) { //function name for ACTION need to revise
+		case '1': imageRecognition(); break;
+		case '2': speechToText(); break;
+		case '3': Q3(); break;
+		//case '4': Q4(); break;
+		case '5':endProgram = true;
+			break;
 		default:
-		cout << "No such Option " << action << "\n\n";
-		break;
-	}
-	}while (action != '5' || !endProgram);
+			cout << "No such Option " << action << "\n\n";
+			break;
+		}
+	} while (action != '5' || !endProgram);
 	return;
 }
 
@@ -153,7 +274,7 @@ void Q5()
 
 bool endProgram = false;
 
-void Q6() //Credits and Exit
+void credits() //Credits and Exit
 {
 	char userInput;
 
@@ -210,7 +331,7 @@ int main()
 		case '3': Q3(); break;
 		case '4': Q4(); break;
 		case '5': Q5(); break;
-		case '6': Q6(); break;
+		case '6': credits(); break;
 			if (!endProgram) {
 			continue;
 			}
