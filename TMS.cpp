@@ -7,7 +7,22 @@ using namespace std;
 class User
 {
 public:
+	User() {
+		userID = "";
+		isDeleted = 0; //isDeleted  0 refers to exists, 1 refers to deleted
+		endProgram = false;
+	}
 	User(string uid, int u_type, int u_tokenBalance, int u_autoTopUp) {
+		userID = uid;
+		type = u_type; // 0 refers to Trial , 1 refers to Full, 2 refers to Student
+		tokenBalance = u_tokenBalance;
+		autoTopup = u_autoTopUp; // autoTopUp 0 refers to No, 1 refers to include auto top up
+		isDeleted = 0; //isDeleted  0 refers to exists, 1 refers to deleted
+		money = 100;
+		endProgram = false;
+	}
+
+	void setUser(string uid, int u_type, int u_tokenBalance, int u_autoTopUp) {
 		userID = uid;
 		type = u_type; // 0 refers to Trial , 1 refers to Full, 2 refers to Student
 		tokenBalance = u_tokenBalance;
@@ -103,10 +118,19 @@ private:
 };
 
 bool endProgram = false;
+User userList[100] = {};
 
-void Q1()
+void initializeUser()
 {
-	// Lily Lily Lily
+	const string userID[] = { "SkyWalker", "Ocean123", "Forest99", "Valley777", "Desert2022", "River456", "Blaze2023", "Meadow888", "Galaxy", "Storn2024" };
+	const int type[] = { 0, 0, 0, 1, 1, 1, 1, 2, 2, 2 };
+	const int tokenBalance[]{ 20, 35, 6, 10, 25, 20, 100, 40, 15, 30 };
+	const int autoTopup[]{ 0, 0, 1, 1, 0, 1, 0, 1, 1, 0 };
+
+	for (int i = 0; i < 10; i++) {
+		userList[i].setUser(userID[i], type[i], tokenBalance[i], autoTopup[i]);
+	}
+
 }
 
 void Q2()
@@ -327,7 +351,7 @@ int main()
 		cout << "\n\n";
 
 		switch (prog_choice) {
-		case '1': Q1(); break;
+		case '1': initializeUser(); break;
 		case '2': Q2(); break;
 		case '3': Q3(); break;
 		//case '4': Q4(); break;
