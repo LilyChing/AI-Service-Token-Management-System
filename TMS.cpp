@@ -96,6 +96,15 @@ public:
 		}
 	}
 
+	void displayDeleteInfo() {
+    cout << "User ID: " << getUserID() << "\n"
+        << "User Type: " << getType() << "\n"
+        << "Token Balance: " << getTokenBalance() << "\n"
+        << "Auto Top-up: " << (getAutoTopup() ? "Yes" : "No") << "\n";
+	}
+
+
+
 private:
 	string userID;
 	int type;
@@ -105,6 +114,16 @@ private:
 	int money; // cash balance
 	bool endProgram;
 };
+
+bool isValidUserType(int userType) {
+	return userType >= 0 && userType <= 2; // Assuming valid types are 0, 1, or 2
+}
+bool isValidTokenBalance(int balance) {
+	return balance >= 0; // Assuming token balance cannot be negative
+}
+bool isValidAutoTopup(int topup) {
+	return topup == 0 || topup == 1; // Assuming valid top-up values are 0 or 1
+}
 
 class Transaction
 {
@@ -181,98 +200,82 @@ void showUserRecords()
 	displayData(userList);
 }
 
-void Q3()
-{
-	// vector<string> userList = { "1", "2", "3" };
-	// string targetID;
+void Q3(){
+    string targetID;
 
-	// cout << "Enter the ID to search for: ";
-	// cin >> targetID;
+    cout << "Enter the ID to search for: ";
+    cin >> targetID;
 
-	//// Use std::find to search for targetID in userList
-	// auto it = find(userList.begin(), userList.end(), targetID);
+    bool found = false;
 
-	//// Check if the ID was found
-	// if (it != userList.end()) {
-	//	cout << "I find it and gonna delete it." << endl;
-	//	// Optionally, you can remove the ID from the list
-	//	userList.erase(it); // Remove the found ID
-	// }
-	// else {
-	//	cout << "I can't find??" << endl;
-	// }
+    // Iterate through the userList to find the targetID
+for (int i = 0; i < userList.size(); i++) {
+        if (userList[i].getUserID() == targetID) {
+            found = true;
+            cout << "User found:\n";
+            userList[i].displayDeleteInfo(); // Display user information
 
-	/*string targetID;
+            // Confirm deletion
+            string confirmation;
+            cout << "Do you really want to delete this user? (yes/no): ";
+            cin >> confirmation;
 
-	cout << "Enter the ID to search for: ";
-	cin >> targetID;
+            if (confirmation == "yes" || confirmation == "Yes" || confirmation == "Y"|| confirmation == "y") {
+                userList.erase(userList.begin() + i); // Remove the found user
+                cout << "User deleted successfully." << endl;
+            } else if(confirmation == "no" || confirmation == "No" || confirmation == "N"|| confirmation == "n"){
+                cout << "Deletion cancelled." << endl;
+            } else{
+				cout << "Please input again." << endl;
+			}
+            return; // Exit the function after handling deletion
+        }
+    }
 
-	for (int i = 0; i < userList.size(); i++) {
-		if (userList[i].getUserID() == targetID) {
-			cout << i << "n-th element: " << userList[i].getUserID() << endl;
-			cout << "I find it and gonna delete it." << endl;
-			userList.erase(userList.begin() + i);
-		}
-		else {
-			cout << "I can't find??" << endl;
-		}
-	}*/
+    if (!found) {
+        // Prompt for new user details with retry mechanism
+        int newType, newBalance, newTopup;
+        int attempts = 0;
 
-	// string checkID;
-	// cout << "Please enter User ID:";
-	// cin >> checkID;
+        while (attempts < 3) {
+            cout << "User not found. Please enter details for this user." << endl;
 
-	// if (searchUserID(checkID) == -1) // -1 means not exist
-	//{
-	//	for (int i = 0; i < 3; i++) // 3 chances for invalid input
-	//	{
+            cout << "Enter user type (0, 1, 2): ";
+            cin >> newType;
+            if (!isValidUserType(newType)) {
+                cout << "Invalid user type. Please enter a value between 0 and 2." << endl;
+                attempts++;
+                continue; // Retry without incrementing attempts further
+            }
 
-	//		cout << "Please enter your Type (T for trial account, F for full account , S for student account) : " << endl;
-	//		char newType;
-	//		cin >> newType;
-	//		if (cin.fail() || (newType != 'T' && newType != 'F' && newType != 'S')) {
-	//			cout << "Invalid input." << endl;
-	//			cin.clear(); // Clear the error state
-	//			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the rest of the line
-	//			continue;
-	//		}
+            cout << "Enter token balance: ";
+            cin >> newBalance;
+            if (!isValidTokenBalance(newBalance)) {
+                cout << "Invalid token balance. It cannot be negative." << endl;
+                attempts++;
+                continue; // Retry without incrementing attempts further
+            }
 
-	//		cout << "Please enter your token balance:";
-	//		int newBal;
-	//		cin >> newBal;
-	//		if (newBal < 0 || cin.fail()) {
-	//			cout << "Invalid input." << endl;
-	//			cin.clear(); // Clear the error state
-	//			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the rest of the line
-	//			continue;
-	//		}
+            cout << "Enter auto top-up (0 or 1): ";
+            cin >> newTopup;
+            if (!isValidAutoTopup(newTopup)) {
+                cout << "Invalid auto top-up value. Please enter 0 or 1." << endl;
+                attempts++;
+                continue; // Retry without incrementing attempts further
+            }
 
-	//		cout << "Please enter 1 to enable auto top-up or enter 2 to suspend autoTop-up: ";
-	//		int ans;
-	//		cin >> ans;
-	//		if (cin.fail() || (ans != 1 && ans != 2)) {
-	//			cout << "Invalid input." << endl;
-	//			cin.clear(); // Clear the error state
-	//			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the rest of the line
-	//			continue;
-	//		}
+            // If all inputs are valid, create a new User and add to userList
+            userList.push_back(User(targetID, newType, newBalance, newTopup));
+            cout << "New user created with ID: " << targetID << endl;
+            return; // Exit after successful creation
+        }
 
-	//		// the code for inserting new account into vector User List
-
-	//		cout << "Congratulation! Your new account is created sucessfully. ";
-	//		break;
-
-	//	}
-
-	//}
-	// else
-
-	//	cin.get();
-
-	// the code for del old account into vector User List
+        // If reached here, it means 3 attempts failed
+        cout << "Too many invalid attempts. No user added." << endl;
+	}
 }
 
-void imageRecognition(User user)
+void imageRecognition()
 {
 	// The 2D array refers to the charges according to different scenario
 	// [0] refers to Under 3MB
