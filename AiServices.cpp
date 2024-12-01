@@ -2,7 +2,7 @@
 #include <iomanip>
 using namespace std;
 
-void imageRecognition()
+void imageRecognition(User user)
 {
   // The 2D array refers to the charges according to different scenario
   // [0] refers to Under 3MB
@@ -10,10 +10,10 @@ void imageRecognition()
   int charges[2][3] = {{5, 5, 4}, {-1, 8, 7}};
   double imgSize = 0.0;
 
-  // 假設用家資料
-  int userType = 0;  // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
-  int autoTopUp = 1; // 0 refers to false 1 refers to true
-  int testUserToken = 0;
+  // 用家資料
+  int userType = user.getType();       // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
+  int autoTopUp = user.getAutoTopup(); // 0 refers to false 1 refers to true
+  int userToken = user.getTokenBalance();
   // Code to implement
   cout << "Thank you for using Image Recognition!" << endl;
   cout << "Please enter the expected Image Size you would like to recognize: ";
@@ -33,25 +33,25 @@ void imageRecognition()
   }
   if (autoTopUp == 0)
   {
-    if (testUserToken < payment)
+    if (userToken < payment)
     {
       cout << "\nInsufficient Token." << endl;
-      cout << "Remaining token: " << testUserToken << endl;
+      cout << "Remaining token: " << userToken << endl;
       cout << "Please try again after purchasing for more tokens." << endl;
       return;
     }
   }
-  if (testUserToken < payment)
+  if (userToken < payment)
   {
-    int diff = payment - testUserToken;
+    int diff = payment - userToken;
     int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
     // autoTopUp
     // code to implement
   }
-  testUserToken -= payment;
+  userToken -= payment;
   cout << "\nImage has been recognized successfully." << endl;
   cout << "Thank you for using AI Service - Image Recognition" << endl;
-  cout << "Remaining Token: " << testUserToken << endl
+  cout << "Remaining Token: " << userToken << endl
        << endl;
   cout << "Enter \'q\' to return to user interface: ";
   char operation;
@@ -59,7 +59,7 @@ void imageRecognition()
   return;
 }
 
-void speechToText()
+void speechToText(User user)
 {
   // The 2D array refers to the charges according to different scenario
   // [0] refers to fee for first 3 minutes
@@ -67,10 +67,10 @@ void speechToText()
   int charges[2] = {2, 3};
   int audioLength;
 
-  // 假設用家資料
-  int userType = 0;  // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
-  int autoTopUp = 1; // 0 refers to false 1 refers to true
-  int testUserToken = 0;
+  // 用家資料
+  int userType = user.getType();       // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
+  int autoTopUp = user.getAutoTopup(); // 0 refers to false 1 refers to true
+  int userToken = user.getTokenBalance();
   // Code to implement
   cout << "Thank you for using Sppech to Text Transcription!" << endl;
   cout << "Please enter the audio length of your speech: ";
@@ -92,25 +92,25 @@ void speechToText()
 
   if (autoTopUp == 0)
   {
-    if (testUserToken < payment)
+    if (userToken < payment)
     {
       cout << "\nInsufficient Token." << endl;
-      cout << "Remaining token: " << testUserToken << endl;
+      cout << "Remaining token: " << userToken << endl;
       cout << "Please try again after purchasing for more tokens." << endl;
       return;
     }
   }
-  if (testUserToken < payment)
+  if (userToken < payment)
   {
-    int diff = payment - testUserToken;
+    int diff = payment - userToken;
     int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
     // autoTopUp
     // code to implement
   }
-  testUserToken -= payment;
+  userToken -= payment;
   cout << "\nText has been generated successfully." << endl;
   cout << "Thank you for using AI Service - Speech to Text Transcription!" << endl;
-  cout << "Remaining Token: " << testUserToken << endl
+  cout << "Remaining Token: " << userToken << endl
        << endl;
   cout << "Enter \'q\' to return to user interface: ";
   char operation;
@@ -118,15 +118,15 @@ void speechToText()
   return;
 }
 
-void predictiveAnalysis()
+void predictiveAnalysis(User user)
 {
   int charges = 10; // token per prediction task
   int tasks = 0;
 
-  // 假設用家資料
-  int userType = 0;  // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
-  int autoTopUp = 1; // 0 refers to false 1 refers to true
-  int testUserToken = 0;
+  // 用家資料
+  int userType = user.getType();       // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
+  int autoTopUp = user.getAutoTopup(); // 0 refers to false 1 refers to true
+  int userToken = user.getTokenBalance();
   // Code to implement
   cout << "Thank you for using Predictive Analysis!" << endl;
   cout << "Please enter the Number of prediction tasks: ";
@@ -140,22 +140,22 @@ void predictiveAnalysis()
 
   if (autoTopUp == 0)
   {
-    if (testUserToken < payment)
+    if (userToken < payment)
     {
       cout << "\nInsufficient Token." << endl;
-      cout << "Remaining token: " << testUserToken << endl;
+      cout << "Remaining token: " << userToken << endl;
       cout << "Please try again after purchasing for more tokens." << endl;
       return;
     }
   }
-  if (testUserToken < payment)
+  if (userToken < payment)
   {
-    int diff = payment - testUserToken;
+    int diff = payment - userToken;
     int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
     // autoTopUp
     // code to implement
   }
-  testUserToken -= payment;
+  userToken -= payment;
   cout << "\nPredicitive Analysis has been generated successfully." << endl;
   cout << fixed << setw(12) << left << "Task ID" << "Predictive Analysis" << endl;
   for (int i = 1; i <= tasks; i++)
@@ -163,7 +163,7 @@ void predictiveAnalysis()
     cout << "Task " << setw(7) << left << i << "True" << endl;
   }
   cout << "Thank you for using AI Service - Predictive Analysis!" << endl;
-  cout << "Remaining Token: " << testUserToken << endl
+  cout << "Remaining Token: " << userToken << endl
        << endl;
   cout << "Enter \'q\' to return to user interface: ";
   char operation;
@@ -171,14 +171,14 @@ void predictiveAnalysis()
   return;
 }
 
-void NLP()
+void NLP(User user)
 {
   int w_count = 0;
 
-  // 假設用家資料
-  int userType = 0;  // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
-  int autoTopUp = 1; // 0 refers to false 1 refers to true
-  int testUserToken = 0;
+  // 用家資料
+  int userType = user.getType();       // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
+  int autoTopUp = user.getAutoTopup(); // 0 refers to false 1 refers to true
+  int userToken = user.getTokenBalance();
   // Code to implement
   cout << "Thank you for using Predictive Analysis!" << endl;
   cout << "Please enter the word count: ";
@@ -199,25 +199,25 @@ void NLP()
 
   if (autoTopUp == 0)
   {
-    if (testUserToken < payment)
+    if (userToken < payment)
     {
       cout << "\nInsufficient Token." << endl;
-      cout << "Remaining token: " << testUserToken << endl;
+      cout << "Remaining token: " << userToken << endl;
       cout << "Please try again after purchasing for more tokens." << endl;
       return;
     }
   }
-  if (testUserToken < payment)
+  if (userToken < payment)
   {
-    int diff = payment - testUserToken;
+    int diff = payment - userToken;
     int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
     // autoTopUp
     // code to implement
   }
-  testUserToken -= payment;
+  userToken -= payment;
   cout << "\nNatural Language Processing has been generated successfully." << endl;
   cout << "Thank you for using AI Service - Natural Language Processing!" << endl;
-  cout << "Remaining Token: " << testUserToken << endl
+  cout << "Remaining Token: " << userToken << endl
        << endl;
   cout << "Enter \'q\' to return to user interface: ";
   char operation;
@@ -225,11 +225,20 @@ void NLP()
   return;
 }
 
+class User
+{
+public:
+  int getType() {}
+  int getTokenBalance() {}
+  int getAutoTopup() {}
+};
+
 int main()
 {
-  imageRecognition();
-  speechToText();
-  predictiveAnalysis();
-  NLP();
+  User u;
+  imageRecognition(u);
+  speechToText(u);
+  predictiveAnalysis(u);
+  NLP(u);
   return 0;
 }

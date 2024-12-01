@@ -2,90 +2,99 @@
 #include <iomanip>
 #include <string>
 #include <vector>
-//#include <algorithm>
+// #include <algorithm>
 using namespace std;
-
 
 class User
 {
 public:
-	User() {
+	User()
+	{
 		userID = "";
-		isDeleted = 0; //isDeleted  0 refers to exists, 1 refers to deleted
+		isDeleted = 0; // isDeleted  0 refers to exists, 1 refers to deleted
 		endProgram = false;
 	}
-	User(string uid, int u_type, int u_tokenBalance, int u_autoTopUp) {
+	User(string uid, int u_type, int u_tokenBalance, int u_autoTopUp)
+	{
 		userID = uid;
 		type = u_type; // 0 refers to Trial , 1 refers to Full, 2 refers to Student
 		tokenBalance = u_tokenBalance;
 		autoTopup = u_autoTopUp; // autoTopUp 0 refers to No, 1 refers to include auto top up
-		isDeleted = 0; //isDeleted  0 refers to exists, 1 refers to deleted
+		isDeleted = 0;					 // isDeleted  0 refers to exists, 1 refers to deleted
 		money = 100;
 		endProgram = false;
 	}
 
-	//Getter & Setter
-	string getUserID() { // How to return char array
+	// Getter & Setter
+	string getUserID()
+	{ // How to return char array
 		return userID;
 	}
 
-	int getType() {
+	int getType()
+	{
 		return type;
 	}
 
-	int getTokenBalance() {
+	int getTokenBalance()
+	{
 		return tokenBalance;
-
 	}
 
-	int getAutoTopup() {
+	int getAutoTopup()
+	{
 		return autoTopup;
 	}
 
-	int getIsDeleted() {
+	int getIsDeleted()
+	{
 		return isDeleted;
 	}
 
-	int getMoney() {
+	int getMoney()
+	{
 		return money;
 	}
 
-	void credit(int amount) {
+	void credit(int amount)
+	{
 		money += amount;
 	}
 
-	void debit(int amount) {
+	void debit(int amount)
+	{
 		money -= amount;
 	}
 
-	void setType(int accType) {
+	void setType(int accType)
+	{
 		type = accType;
 	}
 
-	void setAutoTopup(int topup) {
+	void setAutoTopup(int topup)
+	{
 		autoTopup = topup;
 	}
 
-	void deleteUser() {
+	void deleteUser()
+	{
 		isDeleted = 1;
 	}
 
-	void purchaseToken(int token) {
-		if (money > token * 2) {
-			//add Token
+	void purchaseToken(int token)
+	{
+		if (money > token * 2)
+		{
+			// add Token
 			tokenBalance += token;
 			// money -= token * 2;
 			debit(token * 2);
 		}
-		else {
+		else
+		{
 			cout << "insufficient cash. Please come back after top up." << endl;
 		}
 	}
-
-
-
-
-
 
 private:
 	string userID;
@@ -100,45 +109,42 @@ private:
 class Transaction
 {
 public:
-	//Transaction();
-
+	// Transaction();
 
 private:
-
-
-
 };
 
 bool endProgram = false;
 vector<User> userList;
 
-void displayData(vector<User> array) {
+void displayData(vector<User> array)
+{
 	cout << "\nShow User Records:" << endl;
 	cout << left << setw(50) << "User ID " << setw(10) << "Type" << setw(15) << "Token Balance" << setw(10) << "Auto Top-up" << endl;
-	for (int i = 0; i < array.size(); i++) {
+	for (int i = 0; i < array.size(); i++)
+	{
 		cout << left << setw(50) << array[i].getUserID() << setw(10) << array[i].getType() << setw(15) << array[i].getTokenBalance() << setw(10) << array[i].getAutoTopup() << endl;
 	}
 }
 
 void initializeUser()
 {
-	const string userID[] = { "SkyWalker", "Ocean123", "Forest99", "Valley777", "Desert2022", "River456", "Blaze2023", "Meadow888", "Galaxy", "Storn2024" };
-	const int type[] = { 0, 0, 0, 1, 1, 1, 1, 2, 2, 2 };
-	const int tokenBalance[]{ 20, 35, 6, 10, 25, 20, 100, 40, 15, 30 };
-	const int autoTopup[]{ 0, 0, 1, 1, 0, 1, 0, 1, 1, 0 };
+	const string userID[] = {"SkyWalker", "Ocean123", "Forest99", "Valley777", "Desert2022", "River456", "Blaze2023", "Meadow888", "Galaxy", "Storn2024"};
+	const int type[] = {0, 0, 0, 1, 1, 1, 1, 2, 2, 2};
+	const int tokenBalance[]{20, 35, 6, 10, 25, 20, 100, 40, 15, 30};
+	const int autoTopup[]{0, 0, 1, 1, 0, 1, 0, 1, 1, 0};
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++)
+	{
 		userList.push_back(User(userID[i], type[i], tokenBalance[i], autoTopup[i]));
 	}
 	displayData(userList);
 }
 
-
-
-
 // for checking any exisiting userID
 
-int searchUserID(string checkID) {
+int searchUserID(string checkID)
+{
 	for (int i = 0; i < userList.size(); i++)
 	{
 		if (userList[i].getUserID() == checkID)
@@ -147,24 +153,27 @@ int searchUserID(string checkID) {
 	return -1; // -1 not found, others no. is the number of userList[i]
 }
 
-
-
-
-void swap(string& a, string& b) {
+void swap(string &a, string &b)
+{
 	string temp = a;
 	a = b;
 	b = temp;
 }
 
-void showUserRecords() {
-	if (userList.empty()) {
+void showUserRecords()
+{
+	if (userList.empty())
+	{
 		cout << "You have not yet load starting data! Returning to menu...";
 		return;
 	}
 
-	for (size_t i = 0; i < userList.size(); ++i) {
-		for (size_t j = 0; j < userList.size() - 1; ++j) {
-			if (userList[j].getUserID() > userList[j + 1].getUserID()) {
+	for (size_t i = 0; i < userList.size(); ++i)
+	{
+		for (size_t j = 0; j < userList.size() - 1; ++j)
+		{
+			if (userList[j].getUserID() > userList[j + 1].getUserID())
+			{
 				swap(userList[j], userList[j + 1]);
 			}
 		}
@@ -174,24 +183,24 @@ void showUserRecords() {
 
 void Q3()
 {
-	//vector<string> userList = { "1", "2", "3" };
-	//string targetID;
+	// vector<string> userList = { "1", "2", "3" };
+	// string targetID;
 
-	//cout << "Enter the ID to search for: ";
-	//cin >> targetID;
+	// cout << "Enter the ID to search for: ";
+	// cin >> targetID;
 
 	//// Use std::find to search for targetID in userList
-	//auto it = find(userList.begin(), userList.end(), targetID);
+	// auto it = find(userList.begin(), userList.end(), targetID);
 
 	//// Check if the ID was found
-	//if (it != userList.end()) {
+	// if (it != userList.end()) {
 	//	cout << "I find it and gonna delete it." << endl;
 	//	// Optionally, you can remove the ID from the list
 	//	userList.erase(it); // Remove the found ID
-	//}
-	//else {
+	// }
+	// else {
 	//	cout << "I can't find??" << endl;
-	//}
+	// }
 
 	/*string targetID;
 
@@ -209,12 +218,11 @@ void Q3()
 		}
 	}*/
 
+	// string checkID;
+	// cout << "Please enter User ID:";
+	// cin >> checkID;
 
-	//string checkID;
-	//cout << "Please enter User ID:";
-	//cin >> checkID;
-
-	//if (searchUserID(checkID) == -1) // -1 means not exist
+	// if (searchUserID(checkID) == -1) // -1 means not exist
 	//{
 	//	for (int i = 0; i < 3; i++) // 3 chances for invalid input
 	//	{
@@ -229,7 +237,6 @@ void Q3()
 	//			continue;
 	//		}
 
-
 	//		cout << "Please enter your token balance:";
 	//		int newBal;
 	//		cin >> newBal;
@@ -239,8 +246,6 @@ void Q3()
 	//			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the rest of the line
 	//			continue;
 	//		}
-
-
 
 	//		cout << "Please enter 1 to enable auto top-up or enter 2 to suspend autoTop-up: ";
 	//		int ans;
@@ -254,33 +259,31 @@ void Q3()
 
 	//		// the code for inserting new account into vector User List
 
-
 	//		cout << "Congratulation! Your new account is created sucessfully. ";
 	//		break;
 
 	//	}
 
 	//}
-	//else
+	// else
 
 	//	cin.get();
 
 	// the code for del old account into vector User List
+}
 
-
-
-void imageRecognition()
+void imageRecognition(User user)
 {
 	// The 2D array refers to the charges according to different scenario
 	// [0] refers to Under 3MB
 	// [1] refers to Over 3MB
-	int charges[2][3] = { {5, 5, 4}, {-1, 8, 7} };
+	int charges[2][3] = {{5, 5, 4}, {-1, 8, 7}};
 	double imgSize = 0.0;
 
 	// 假設用家資料
-	int userType = 0;  // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
-	int autoTopUp = 1; // 0 refers to false 1 refers to true
-	int testUserToken = 0;
+	int userType = user.getType();			 // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
+	int autoTopUp = user.getAutoTopup(); // 0 refers to false 1 refers to true
+	int userToken = user.getTokenBalance();
 	// Code to implement
 	cout << "Thank you for using Image Recognition!" << endl;
 	cout << "Please enter the expected Image Size you would like to recognize: ";
@@ -300,26 +303,26 @@ void imageRecognition()
 	}
 	if (autoTopUp == 0)
 	{
-		if (testUserToken < payment)
+		if (userToken < payment)
 		{
 			cout << "\nInsufficient Token." << endl;
-			cout << "Remaining token: " << testUserToken << endl;
+			cout << "Remaining token: " << userToken << endl;
 			cout << "Please try again after purchasing for more tokens." << endl;
 			return;
 		}
 	}
-	if (testUserToken < payment)
+	if (userToken < payment)
 	{
-		int diff = payment - testUserToken;
+		int diff = payment - userToken;
 		int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
-		// autoTopUp
-		// code to implement
+																														// autoTopUp
+																														// code to implement
 	}
-	testUserToken -= payment;
+	userToken -= payment;
 	cout << "\nImage has been recognized successfully." << endl;
 	cout << "Thank you for using AI Service - Image Recognition" << endl;
-	cout << "Remaining Token: " << testUserToken << endl
-		<< endl;
+	cout << "Remaining Token: " << userToken << endl
+			 << endl;
 	cout << "Enter \'q\' to return to user interface: ";
 	char operation;
 	cin >> operation;
@@ -331,13 +334,13 @@ void speechToText()
 	// The 2D array refers to the charges according to different scenario
 	// [0] refers to fee for first 3 minutes
 	// [1] refers to fee for after 3 minutes
-	int charges[2] = { 2, 3 };
+	int charges[2] = {2, 3};
 	int audioLength;
 
 	// 假設用家資料
-	int userType = 0;  // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
+	int userType = 0;	 // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
 	int autoTopUp = 1; // 0 refers to false 1 refers to true
-	int testUserToken = 0;
+	int userToken = 0;
 	// Code to implement
 	cout << "Thank you for using Sppech to Text Transcription!" << endl;
 	cout << "Please enter the audio length of your speech: ";
@@ -359,26 +362,26 @@ void speechToText()
 
 	if (autoTopUp == 0)
 	{
-		if (testUserToken < payment)
+		if (userToken < payment)
 		{
 			cout << "\nInsufficient Token." << endl;
-			cout << "Remaining token: " << testUserToken << endl;
+			cout << "Remaining token: " << userToken << endl;
 			cout << "Please try again after purchasing for more tokens." << endl;
 			return;
 		}
 	}
-	if (testUserToken < payment)
+	if (userToken < payment)
 	{
-		int diff = payment - testUserToken;
+		int diff = payment - userToken;
 		int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
-		// autoTopUp
-		// code to implement
+																														// autoTopUp
+																														// code to implement
 	}
-	testUserToken -= payment;
+	userToken -= payment;
 	cout << "\nText has been generated successfully." << endl;
 	cout << "Thank you for using AI Service - Speech to Text Transcription!" << endl;
-	cout << "Remaining Token: " << testUserToken << endl
-		<< endl;
+	cout << "Remaining Token: " << userToken << endl
+			 << endl;
 	cout << "Enter \'q\' to return to user interface: ";
 	char operation;
 	cin >> operation;
@@ -389,7 +392,8 @@ void aiServiceMenu()
 {
 	char action;
 
-	do {
+	do
+	{
 		cout << "\n\n";
 		cout << "Select AI Service : " << endl; // user name variable is tbc
 		cout << "*****AI Service Menu*****" << endl;
@@ -403,13 +407,20 @@ void aiServiceMenu()
 		cin >> action;
 		cout << "\n\n";
 
-
-		switch (action) { //function name for ACTION need to revise
-		case '1': imageRecognition(); break;
-		case '2': speechToText(); break;
-		case '3': Q3(); break;
-		//case '4': Q4(); break;
-		case '5':endProgram = true;
+		switch (action)
+		{ // function name for ACTION need to revise
+		case '1':
+			imageRecognition();
+			break;
+		case '2':
+			speechToText();
+			break;
+		case '3':
+			Q3();
+			break;
+		// case '4': Q4(); break;
+		case '5':
+			endProgram = true;
 			break;
 		default:
 			cout << "No such Option " << action << "\n\n";
@@ -421,35 +432,41 @@ void aiServiceMenu()
 
 void Q5()
 {
-
 }
 
-
-void credits() //Credits and Exit
+void credits() // Credits and Exit
 {
 	char userInput;
 
-	while (true) {
+	while (true)
+	{
 		cout << "Show the credit? (Y / N) ";
 		cin >> userInput;
 
-		if (userInput == 'y' || userInput == 'Y') {
-			cout << endl<< setw(24) << "~ Credit ~" << endl;
-			cout << left << setw(18) << "Name:" << "\tStudent ID:\tClass:" << endl << endl;
+		if (userInput == 'y' || userInput == 'Y')
+		{
+			cout << endl
+					 << setw(24) << "~ Credit ~" << endl;
+			cout << left << setw(18) << "Name:" << "\tStudent ID:\tClass:" << endl
+					 << endl;
 			cout << left << setw(18) << "CHING Yan Lee" << "\t24050083S\t102" << endl;
 			cout << left << setw(18) << "LEE Cheuk Him" << "\t24076812S\t102" << endl;
 			cout << left << setw(18) << "FUNG Ho Ming" << "\t24059970S\t102" << endl;
 			cout << left << setw(18) << "AU-YEUNG Wing Lam" << "\t24063299S\t102" << endl;
 			cout << left << setw(18) << "LAM Wai Ha" << "\t24049348S\t102" << endl;
-			cout << left << setw(18) << "WONG Sze Wun" << "\t24059631S\t102" << endl << endl;
+			cout << left << setw(18) << "WONG Sze Wun" << "\t24059631S\t102" << endl
+					 << endl;
 		}
 
-		else if (userInput == 'n' || userInput == 'N') {
+		else if (userInput == 'n' || userInput == 'N')
+		{
 			return;
 		}
 
-		else {
-			cout << endl << "Wrong input. Only Y/N is accepted. Please retry." << "\n\n";
+		else
+		{
+			cout << endl
+					 << "Wrong input. Only Y/N is accepted. Please retry." << "\n\n";
 			cin.clear();
 			cin.ignore(1000000, '\n');
 		}
@@ -460,7 +477,8 @@ int main()
 {
 	char prog_choice;
 
-	do {
+	do
+	{
 		cout << "\n\n";
 		cout << "~ Welcome To AI Service Token Management System ~" << endl;
 		cout << "---------------------------------------" << endl;
@@ -476,23 +494,36 @@ int main()
 		cin >> prog_choice;
 		cout << "\n\n";
 
-		switch (prog_choice) {
-		case '1': initializeUser(); break;
-		case '2': showUserRecords(); break;
-			  break;
-		case '3': Q3(); break;
-		//case '4': Q4(); break;
-		case '5': Q5(); break;
-		case '6': credits(); break;
-			if (!endProgram) {
-			continue;
+		switch (prog_choice)
+		{
+		case '1':
+			initializeUser();
+			break;
+		case '2':
+			showUserRecords();
+			break;
+			break;
+		case '3':
+			Q3();
+			break;
+		// case '4': Q4(); break;
+		case '5':
+			Q5();
+			break;
+		case '6':
+			credits();
+			break;
+			if (!endProgram)
+			{
+				continue;
 			}
-		case '7': break;
+		case '7':
+			break;
 		default:
 			cout << "No such Option " << prog_choice << endl;
 			break;
 		}
-	} while (prog_choice != '6'|| !endProgram);
+	} while (prog_choice != '6' || !endProgram);
 
 	cout << "System terminates. Good bye!" << endl;
 	return 0;
