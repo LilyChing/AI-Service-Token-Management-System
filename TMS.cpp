@@ -11,12 +11,6 @@ using namespace std;
 class Transaction
 {
 public:
-	Transaction()
-	{
-		TokenchangeAmount = 0;
-		moneySpent = 0;
-		TokenUsage = -1;
-	}
 
 	Transaction(int tokenchange, int usage)
 	{
@@ -113,7 +107,7 @@ public:
 	{
 		if (money > token * 2)
 		{
-			setTransactionHistory(token, 0);
+			setTransactionHistory(+token, 0);
 			// add Token
 			tokenBalance += token;
 			// money -= token * 2;
@@ -150,7 +144,7 @@ public:
 		transactionHistory.push_back(Transaction(tokenchange, usage));
 	}
 
-	vector<Transaction> getTransactionHistory()
+	vector<Transaction>& getTransactionHistory()
 	{
 		return transactionHistory;
 	}
@@ -408,7 +402,7 @@ void imageRecognition(User user)
 		int diff = payment - userToken;
 		int topUp = diff % 10 == 0 ? diff : diff / 10 * 10 + 10; // topUp refers to times of top up 10 token
 		user.purchaseToken(topUp);
-		user.setTransactionHistory(topUp, 5); // autoTopUp
+		user.setTransactionHistory(-topUp, 5); // autoTopUp
 																					// code to implement
 	}
 	user.useToken(payment);
@@ -416,7 +410,7 @@ void imageRecognition(User user)
 	cout << "Thank you for using AI Service - Image Recognition" << endl;
 	cout << "Original balance : " << orginToken << " token(s). Remaining Token: " << userToken << endl;
 
-	user.setTransactionHistory(payment, 1);
+	user.setTransactionHistory(-payment, 1);
 
 	cout << "Enter \'q\' to return to user interface: ";
 	char operation;
@@ -780,8 +774,53 @@ void editProfile(string actionUser)
 	}
 }
 
-// [4.4]
-void Q4() {}
+//[4.4]
+void showUserTransactionSummary(User& user) 
+{
+	vector<Transaction> tran = user.getTransactionHistory();
+
+	if (tran.empty())
+	{
+		cout << "No transaction history available for this user." << endl;
+		return;
+	}
+
+	cout << "Transaction History for User ID: " << user.getUserID() << endl;
+	cout << left << setw(20) << "Token Change" << setw(30) << "Usage Type" << setw(20) << "Money Spent" << endl;
+
+	for (size_t j = 0; j < tran.size(); j++)
+	{
+		cout << left << setw(20) << tran[j].getTokenchange()
+			<< setw(30);
+
+		switch (tran[j].getTokenUsage())
+		{
+		case 0:
+			cout << "Purchase Tokens";
+			break;
+		case 1:
+			cout << "Image Recognition";
+			break;
+		case 2:
+			cout << "Speech-to-text transcription";
+			break;
+		case 3:
+			cout << "Predictive Analysis";
+			break;
+		case 4:
+			cout << "Natural Language Processing (NLP)";
+			break;
+		case 5:
+			cout << "Auto Top-Up";
+			break;
+		default:
+			cout << "Unknown Usage";
+			break;
+		}
+
+		cout << setw(20) << tran[j].getMoneySpent() << endl;
+	}
+}
 
 // [4] User Menu
 void enterUserView()
@@ -837,7 +876,7 @@ void enterUserView()
 			editProfile(actionUser);
 			break;
 		case '4':
-			Q4();
+			showUserTransactionSummary(userList[userIndex]);
 			break;
 		case '5':
 			endProgram = true;
