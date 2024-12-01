@@ -197,9 +197,22 @@ void displayData(vector<User> array)
 	cout << "\nShow User Records:" << endl;
 	cout << left << setw(50) << "User ID " << setw(10) << "Type" << setw(15) << "Token Balance" << setw(10) << "Auto Top-up" << endl;
 	for (int i = 0; i < array.size(); i++)
-	{
-		cout << left << setw(50) << array[i].getUserID() << setw(10) << array[i].getType() << setw(15) << array[i].getTokenBalance() << setw(10) << array[i].getAutoTopup() << endl;
+{
+	string userType;
+	switch (array[i].getType()) {
+	case 0: userType = "T"; break;
+	case 1: userType = "F"; break;
+	case 2: userType = "S"; break;
 	}
+
+	string autoTopupStatus = (array[i].getAutoTopup() == 0) ? "N" : "Y";
+
+	cout << left << setw(50) << array[i].getUserID()
+		<< setw(10) << userType
+		<< setw(15) << array[i].getTokenBalance()
+		<< setw(10) << autoTopupStatus
+		<< endl;
+}
 }
 
 string findUserID(string userID)
