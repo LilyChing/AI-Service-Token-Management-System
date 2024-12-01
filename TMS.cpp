@@ -53,6 +53,13 @@ public:
 		autoTopup = u_autoTopUp; // autoTopUp 0 refers to No, 1 refers to include auto top up
 		money = 100;
 		endProgram = false;
+		switch (typeChar) {
+		case 0: typeChar = 'T'; break;
+		case 1: typeChar = 'F'; break;
+		case 2: typeChar = 'S'; break;
+		}
+		atpChar = (autoTopup == 0) ? 'N' : 'Y';
+				
 	}
 
 	// Getter & Setter
@@ -84,6 +91,9 @@ public:
 	int getOriginalToken() {
 		return originalToken;
 	}
+
+	char getTypeChar() const { return typeChar; }
+	char getAtpChar() const { return atpChar; }
 
 	void credit(int amount)
 	{
@@ -163,6 +173,8 @@ private:
 	int totalMoneyPaidForTokens;
 	vector<Transaction> transactionHistory;
 	bool endProgram;
+	char typeChar;
+	char atpChar;
 };
 
 /* -------------------- Class --------------------*/
@@ -336,15 +348,19 @@ void editUser()
 		{
 			cout << "User not found. Please enter details for this user." << endl;
 
-			cout << "Enter user type (0, 1, 2): ";
-			cin >> newType;
-			if (!isValidUserType(newType))
-			{
-				cout << "Invalid user type. Please enter a value between 0 and 2." << endl;
+			char typeChar;
+			cout << "Enter user type (T = Trial,F = Full, S = Student): ";
+			cin >> typeChar;
+
+			switch (typeChar) {
+			case 'T': newType = 0; break;
+			case 'F': newType = 1; break;
+			case 'S': newType = 2; break;
+			default:
+				cout << "Invalid user type. Please enter a value between T, F and S." << endl;
 				attempts++;
 				continue; // Retry without incrementing attempts further
 			}
-
 			cout << "Enter token balance: ";
 			cin >> newBalance;
 			if (!isValidTokenBalance(newBalance))
@@ -354,15 +370,17 @@ void editUser()
 				continue; // Retry without incrementing attempts further
 			}
 
-			cout << "Enter auto top-up (0 or 1): ";
-			cin >> newTopup;
-			if (!isValidAutoTopup(newTopup))
-			{
-				cout << "Invalid auto top-up value. Please enter 0 or 1." << endl;
+			char atpChar;
+			cout << "Enter auto top-up (N or Y): ";
+			cin >> atpChar;
+			switch (atpChar) {
+			case 'N': newTopup = 0; break;
+			case 'Y': newTopup = 1; break;
+			default:
+				cout << "Invalid user type. Please enter N or Y." << endl;
 				attempts++;
 				continue; // Retry without incrementing attempts further
 			}
-
 			// If all inputs are valid, create a new User and add to userList
 			userList.push_back(User(targetID, newType, newBalance, newTopup));
 			cout << "New user created with ID: " << targetID << endl;
