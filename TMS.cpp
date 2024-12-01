@@ -358,7 +358,7 @@ void editUser()
 }
 
 // [4.1.1]
-void imageRecognition(User user)
+void imageRecognition(User &user)
 {
 	// The 2D array refers to the charges according to different scenario
 	// [0] refers to Under 3MB
@@ -421,7 +421,7 @@ void imageRecognition(User user)
 }
 
 // [4.1.2]
-void speechToText(User user)
+void speechToText(User &user)
 {
 	// The 2D array refers to the charges according to different scenario
 	// [0] refers to fee for first 3 minutes
@@ -484,7 +484,7 @@ void speechToText(User user)
 }
 
 // [4.1.3]
-void predictiveAnalysis(User user)
+void predictiveAnalysis(User &user)
 {
 
 	// call User information
@@ -568,7 +568,7 @@ void predictiveAnalysis(User user)
 }
 
 // [4.1.4]
-void nlp(User user)
+void nlp(User &user)
 {
 
 	int userType = user.getType();			 // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
@@ -663,7 +663,7 @@ void aiServiceMenu(int userIndex)
 		cout << "[1] Image Recognition" << endl;
 		cout << "[2] Speech-to-text transcription" << endl;
 		cout << "[3] Predictive Analysis" << endl;
-		cout << "[4] Natural Language Processing (NLP)" << endl;
+		cout << "[4] Natural Language Processing" << endl;
 		cout << "[5] Return to User View Menu" << endl;
 		cout << "**************************" << endl;
 		cout << "Option(1 - 5) :";
