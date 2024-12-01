@@ -27,7 +27,7 @@ public:
 		return TokenchangeAmount;
 	}
 
-	int getTokenchange() {
+	int getMoneySpent() {
 		return moneySpent;
 	}
 
@@ -595,9 +595,10 @@ void nlp(User user) {
 
 
 
-void aiServiceMenu()
+void aiServiceMenu(int userIndex)
 {
 	char action;
+	userList[userIndex];
 
 	do
 	{
@@ -620,13 +621,13 @@ void aiServiceMenu()
 			//imageRecognition();
 			break;
 		case '2':
-			speechToText();
+			speechToText(userList[userIndex]);
 			break;
 			// case '3':
 			//	aiServiceMenu();
 			//	break;
 		case '4': 
-			nlp();
+			nlp(userList[userIndex]);
 			break;
 		case '5':
 			endProgram = true;
@@ -705,7 +706,7 @@ void Q4()
 
 
 		switch (action) {
-		case '1': aiServiceMenu(); break;
+		case '1': aiServiceMenu(userIndex); break;
 		case '2': Q2(); break;
 		case '3': Q3(); break;
 		case '4': Q4(); break;
