@@ -2,7 +2,9 @@
 #include <iomanip>
 #include <string>
 #include <vector>
-// #include <algorithm>
+#include <sstream>
+#include <limits>
+
 using namespace std;
 
 class Transaction
@@ -501,8 +503,6 @@ void predictiveAnalysis(User user) {
 	}
 }
 
-
-
 void nlp(User user) {
 
 	int userType = user.getType();       // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
@@ -625,7 +625,9 @@ void aiServiceMenu()
 			// case '3':
 			//	aiServiceMenu();
 			//	break;
-			// case '4': Q4(); break;
+		case '4': 
+			nlp();
+			break;
 		case '5':
 			endProgram = true;
 			break;
