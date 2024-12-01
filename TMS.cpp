@@ -160,18 +160,6 @@ void initializeUser()
 	displayData(userList);
 }
 
-// for checking any exisiting userID
-
-int searchUserID(string checkID)
-{
-	for (int i = 0; i < userList.size(); i++)
-	{
-		if (userList[i].getUserID() == checkID)
-			return i;
-	}
-	return -1; // -1 not found, others no. is the number of userList[i]
-}
-
 void swap(string &a, string &b)
 {
 	string temp = a;
@@ -201,6 +189,10 @@ void showUserRecords()
 }
 
 void editUser(){
+	if (userList.empty()){
+		cout << "You have not yet load starting data! Returning to menu...";
+		return;
+	}
     string targetID;
 
     cout << "Enter the ID to search for: ";
@@ -419,7 +411,7 @@ void aiServiceMenu()
 			speechToText();
 			break;
 		case '3':
-			Q3();
+			aiServiceMenu();
 			break;
 		// case '4': Q4(); break;
 		case '5':
@@ -504,7 +496,6 @@ int main()
 			break;
 		case '2':
 			showUserRecords();
-			break;
 			break;
 		case '3':
 			editUser();
