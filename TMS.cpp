@@ -11,20 +11,32 @@ public:
 	Transaction() {
 		TokenchangeAmount = 0;
 		moneySpent = 0;
-		TokenUsage = "default";
+		TokenUsage = -1;
 	}
 
-	Transaction(int tokenchange, string usage) {
+	Transaction(int tokenchange, int usage) {
 
 		TokenchangeAmount = tokenchange;
 		moneySpent = tokenchange * 2;
 		TokenUsage = usage;
 	}
 
+	int getTokenchange() {
+		return TokenchangeAmount;
+	}
+
+	int getTokenchange() {
+		return moneySpent;
+	}
+
+	int getTokenUsage() {
+		return TokenUsage;
+	}
+
 private:
 	int TokenchangeAmount;
 	int moneySpent;
-	string TokenUsage;
+	int TokenUsage; // 0:Purchase Tokens; 1: Image Recognition; 2: Speech-to-text transcription; 3: Predictive Analysis; 4: Natural Language Processing(NLP); 5: Auto top-up
 };
 
 class User
@@ -102,7 +114,7 @@ public:
 	{
 		if (money > token * 2)
 		{
-			setTransactionHistory(token, "Purchase Tokens");
+			setTransactionHistory(token, 0);
 			// add Token
 			tokenBalance += token;
 			// money -= token * 2;
@@ -121,7 +133,7 @@ public:
 			<< "Auto Top-up: " << (getAutoTopup() ? "Yes" : "No") << "\n";
 	}
 
-	void setTransactionHistory(int tokenchange, string usage) {
+	void setTransactionHistory(int tokenchange, int usage) {
 		transactionHistory.push_back(Transaction(tokenchange, usage));
 	}
 
@@ -332,7 +344,7 @@ void imageRecognition(User user)
 		int diff = payment - userToken;
 		int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
 
-		user.setTransactionHistory(topUp, "Auto TopUp");																												// autoTopUp
+		user.setTransactionHistory(topUp, 5);																												// autoTopUp
 		// code to implement
 	}
 	userToken -= payment;
@@ -340,7 +352,7 @@ void imageRecognition(User user)
 	cout << "Thank you for using AI Service - Image Recognition" << endl;
 	cout << "Remaining Token: " << userToken << endl;
 
-	user.setTransactionHistory(payment, "Image Recognition");
+	user.setTransactionHistory(payment, 1);
 
 	cout << "Enter \'q\' to return to user interface: ";
 	char operation;
@@ -394,11 +406,11 @@ void speechToText(User user)
 		int diff = payment - userToken;
 		int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
 
-		user.setTransactionHistory(topUp, "Auto TopUp");																												// autoTopUp
+		user.setTransactionHistory(topUp, 5);																												// autoTopUp
 		// code to implement
 	}
 	userToken -= payment;
-	user.setTransactionHistory(payment, "Text Transcription");
+	user.setTransactionHistory(payment, 2);
 
 	cout << "\nText has been generated successfully." << endl;
 	cout << "Thank you for using AI Service - Speech to Text Transcription!" << endl;
@@ -463,13 +475,13 @@ void predictiveAnalysis(User user) {
 
 			(extraToken % 10 == 0) ? autoUpAmt = extraToken : autoUpAmt = extraToken + (10 - extraToken % 10);
 
-			user.setTransactionHistory(autoUpAmt, "AutoTopUp");
+			user.setTransactionHistory(autoUpAmt, 5);
 
 			cout << "Insuffient token. $" << autoUpAmt * 2 << "have been charged for auto top-up " << autoUpAmt << " tokens." << endl;
 			cout << "Remaining: " << userToken + autoUpAmt - task * 10 << " token(s)." << endl;
 			// transfer info to transaction acct
-			user.setTransactionHistory(autoUpAmt, "Auto TopUp");
-			user.setTransactionHistory(10 * task, "Predictive Analysis");
+			user.setTransactionHistory(autoUpAmt, 5);
+			user.setTransactionHistory(10 * task, 3);
 			return;
 		}
 	}
@@ -481,7 +493,7 @@ void predictiveAnalysis(User user) {
 		cout << "Remaining: " << userToken - task * 10 << "tokens" << endl;
 
 		// transfer info to transaction acct
-		user.setTransactionHistory(10 * task, "Predictive Analysis");
+		user.setTransactionHistory(10 * task, 3);
 
 		cout << "Press any button to return to the User View Menu.";
 		cin.get();
@@ -561,8 +573,8 @@ void nlp(User user) {
 			cout << "Insuffient token. $" << autoToptoken * 2 << "have been charged for auto top-up " << autoToptoken << " tokens." << endl;
 			cout << "Remaining: " << userToken + autoToptoken - totalcost << " token(s)." << endl;
 
-			user.setTransactionHistory(autoToptoken, "Auto TopUp");
-			user.setTransactionHistory(totalcost, "Natural Language Processing");
+			user.setTransactionHistory(autoToptoken, 5);
+			user.setTransactionHistory(totalcost, 4);
 
 
 			return;
@@ -571,7 +583,7 @@ void nlp(User user) {
 	else {
 
 		cout << totalcost << " tokens have been deducted. Remaining: " << userToken - totalcost << " tokens." << endl;
-		user.setTransactionHistory(totalcost, "Natural Language Processing");
+		user.setTransactionHistory(totalcost, 4);
 		return;
 	}
 
@@ -708,8 +720,55 @@ void Q4()
 
 
 
-void Q5()
+void showSystemUsageSummary()
 {
+	if (userList.empty())
+	{
+		cout << "You have not yet load starting data! Returning to menu...";
+		return;
+	}
+
+	int freq[6] = { 0, 0, 0, 0, 0, 0 };
+	for (int i = 0; i < userList.size(); i++) {
+		vector<Transaction> tran = userList[i].getTransactionHistory();
+		for (int j = 0; j < tran.size(); j++) {
+			for (int freqIndex = 0; freqIndex < sizeof(freq); freqIndex++) {
+				if (tran[j].getTokenUsage() == freqIndex) {
+					freq[freqIndex] += tran[j].getTokenchange();
+				}
+			}
+		}
+	}
+
+	int totalTokensSpentOnAllAI = 0;
+	// Show the number of tokens spent on each of the AI service by all users
+	for (int freqIndex = 1; freqIndex <= 4; freqIndex++) {
+		cout << left << setw(20) << "The total tokens spent on ";
+		switch (freqIndex) {
+		case 1:
+			cout << "Image Recognition";
+			break;
+		case 2:
+			cout << "Speech-to-text transcription";
+			break;
+		case 3:
+			cout << "Predictive Analysis";
+			break;
+		case 4:
+			cout << "Natural Language Processing (NLP)";
+			break;
+		default:
+			break;
+		}
+		cout << ": " << freq[freqIndex];
+		totalTokensSpentOnAllAI += freq[freqIndex];
+	}
+
+	//the total number of tokens spent on all AI services by all users
+	cout << left << setw(20) << "The total tokens spent on all AI services:" << totalTokensSpentOnAllAI << endl;
+
+	//the total amount of money paid for buying tokens (including auto top-up)
+	cout << left << setw(20) << "The total money paid for buying tokens:" << (freq[0] + freq[5]) * 2 << endl;
 }
 
 void credits() // Credits and Exit
@@ -785,7 +844,7 @@ int main()
 			break;
 		case '4': Q4(); break;
 		case '5':
-			Q5();
+			showSystemUsageSummary();
 			break;
 		case '6':
 			credits();
