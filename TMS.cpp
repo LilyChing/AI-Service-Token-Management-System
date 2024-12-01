@@ -271,7 +271,7 @@ void showUserRecords()
 	}
 	displayData(userList);
 }
-3
+
 // [3]
 void editUser()
 {
@@ -291,7 +291,6 @@ void editUser()
 	for (int i = 0; i < userList.size(); i++) {
 		if (userList[i].getUserID() == targetID) {
 			found = true;
-
 			userList[i].displayDeleteInfo(); // Display user information
 
 			// Confirm deletion
