@@ -789,32 +789,32 @@ void showSystemUsageSummary()
 	int totalTokensSpentOnAllAI = 0;
 	// Show the number of tokens spent on each of the AI service by all users
 	for (int freqIndex = 1; freqIndex <= 4; freqIndex++) {
-		cout << left << setw(20) << "The total tokens spent on ";
+		//cout << left << setw(80) << "The total tokens spent on ";
 		switch (freqIndex) {
 		case 1:
-			cout << "Image Recognition";
+			cout << left << setw(80) << "The total tokens spent on Image Recognition: ";
 			break;
 		case 2:
-			cout << "Speech-to-text transcription";
+			cout << left << setw(80) << "The total tokens spent on Speech-to-text transcription: ";
 			break;
 		case 3:
-			cout << "Predictive Analysis";
+			cout << left << setw(80) << "The total tokens spent on Predictive Analysis: ";
 			break;
 		case 4:
-			cout << "Natural Language Processing (NLP)";
+			cout << left << setw(80) << "The total tokens spent on Natural Language Processing: ";
 			break;
 		default:
 			break;
 		}
-		cout << ": " << freq[freqIndex];
+		cout << setw(20) << freq[freqIndex] << endl;
 		totalTokensSpentOnAllAI += freq[freqIndex];
 	}
 
 	//the total number of tokens spent on all AI services by all users
-	cout << left << setw(20) << "The total tokens spent on all AI services:" << totalTokensSpentOnAllAI << endl;
+	cout << left << setw(80) << "The total tokens spent on all AI services:" << setw(20) << totalTokensSpentOnAllAI << endl;
 
 	//the total amount of money paid for buying tokens (including auto top-up)
-	cout << left << setw(20) << "The total money paid for buying tokens:" << (freq[0] + freq[5]) * 2 << endl;
+	cout << left << setw(80) << "The total money paid for buying tokens:" << setw(20) << (freq[0] + freq[5]) * 2 << endl;
 }
 
 // [6]
