@@ -7,6 +7,7 @@
 
 using namespace std;
 
+/* -------------------- Class --------------------*/
 class Transaction
 {
 public:
@@ -97,13 +98,16 @@ public:
 		money -= amount;
 	}
 
-	void setType(int accType)
+	void setType(string userID, int accType)
 	{
+		userID = userID;
 		type = accType;
 	}
 
-	void setAutoTopup(int topup)
+
+	void setAutoTopup(string userID, int topup)
 	{
+		userID = userID;
 		autoTopup = topup;
 	}
 
@@ -156,18 +160,28 @@ private:
 	bool endProgram;
 };
 
+/* -------------------- Class --------------------*/
+bool endProgram = false;
+vector<User> userList;
+/* -------------------- Checking Function --------------------*/
+
 bool isValidUserType(int userType) {
 	return userType >= 0 && userType <= 2; // Assuming valid types are 0, 1, or 2
 }
+
 bool isValidTokenBalance(int balance) {
 	return balance >= 0; // Assuming token balance cannot be negative
 }
+
 bool isValidAutoTopup(int topup) {
 	return topup == 0 || topup == 1; // Assuming valid top-up values are 0 or 1
 }
 
-bool endProgram = false;
-vector<User> userList;
+void swap(string& a, string& b){
+	string temp = a;
+	a = b;
+	b = temp;
+}
 
 void displayData(vector<User> array)
 {
@@ -179,6 +193,33 @@ void displayData(vector<User> array)
 	}
 }
 
+string findUserID(const string& userID) {
+	// Iterate through the userList to find the targetID
+	for (int i = 0; i < userList.size(); i++) {
+		if (userList[i].getUserID() == userID) {
+			return userID;
+		}
+	}
+	cout << "User not found: " << userID << endl;
+	return "false";
+}
+
+int findUserIndex(string userID) {
+	// Iterate through the userList to find the targetID
+	for (int i = 0; i < userList.size(); i++) {
+		if (userList[i].getUserID() == userID) {
+			return i;
+		}
+	}
+	cout << "User not found: " << userID << endl;
+	return 0;
+}
+/* -------------------- Checking Function --------------------*/
+
+
+/* -------------------- Main Function --------------------*/
+
+// [1]
 void initializeUser()
 {
 	const string userID[] = { "SkyWalker", "Ocean123", "Forest99", "Valley777", "Desert2022", "River456", "Blaze2023", "Meadow888", "Galaxy", "Storn2024" };
@@ -193,13 +234,7 @@ void initializeUser()
 	displayData(userList);
 }
 
-void swap(string& a, string& b)
-{
-	string temp = a;
-	a = b;
-	b = temp;
-}
-
+// [2]
 void showUserRecords()
 {
 	if (userList.empty())
@@ -221,6 +256,7 @@ void showUserRecords()
 	displayData(userList);
 }
 
+// [3]
 void editUser() {
 	if (userList.empty()) {
 		cout << "You have not yet load starting data! Returning to menu...";
@@ -302,6 +338,7 @@ void editUser() {
 	}
 }
 
+// [4.1.1]
 void imageRecognition(User user)
 {
 	// The 2D array refers to the charges according to different scenario
@@ -362,6 +399,7 @@ void imageRecognition(User user)
 	return;
 }
 
+// [4.1.2]
 void speechToText(User user)
 {
 	// The 2D array refers to the charges according to different scenario
@@ -423,7 +461,7 @@ void speechToText(User user)
 	return;
 }
 
-
+// [4.1.3]
 void predictiveAnalysis(User user) {
 
 	// call User information
@@ -503,6 +541,7 @@ void predictiveAnalysis(User user) {
 	}
 }
 
+// [4.1.4]
 void nlp(User user) {
 
 	int userType = user.getType();       // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
@@ -566,10 +605,7 @@ void nlp(User user) {
 			return; // & return to User view menu
 		}
 		else {
-
 			((totalcost - userToken) % 10) == 0 ? autoToptoken = (totalcost - userToken) / 10 : autoToptoken = (totalcost - userToken) / 10 + 10;
-
-
 			cout << "Insuffient token. $" << autoToptoken * 2 << "have been charged for auto top-up " << autoToptoken << " tokens." << endl;
 			cout << "Remaining: " << userToken + autoToptoken - totalcost << " token(s)." << endl;
 
@@ -589,16 +625,10 @@ void nlp(User user) {
 
 }
 
-
-
-
-
-
-
+// [4.1] AI Menu
 void aiServiceMenu(int userIndex)
 {
 	char action;
-	userList[userIndex];
 
 	do
 	{
@@ -618,14 +648,14 @@ void aiServiceMenu(int userIndex)
 		switch (action)
 		{ // function name for ACTION need to revise
 		case '1':
-			//imageRecognition();
+			imageRecognition(userList[userIndex]);
 			break;
 		case '2':
 			speechToText(userList[userIndex]);
 			break;
-			// case '3':
-			//	aiServiceMenu();
-			//	break;
+		case '3':
+			predictiveAnalysis(userList[userIndex]);
+			break;
 		case '4': 
 			nlp(userList[userIndex]);
 			break;
@@ -640,32 +670,48 @@ void aiServiceMenu(int userIndex)
 	return;
 }
 
+// [4.2]
 void Q2() {}
-void Q3() {}
 
-string findUserID(const string& userID) {
-	// Iterate through the userList to find the targetID
+// [4.3]
+void editProfile(string actionUser){
 	for (int i = 0; i < userList.size(); i++) {
-		if (userList[i].getUserID() == userID) {
-			return userID;
+		if (userList[i].getUserID() == actionUser) {
+			int newType, newBalance, newTopup;
+			int attempts = 0;
+			while (attempts < 3) {
+				cout << "Change Your Setting" << endl;
+				cout << "Enter your type - 0(Trial), 1(Full), 2(Student): ";
+				cin >> newType;
+
+				if (!isValidUserType(newType)) {
+					cout << "Invalid user type. Please enter a value between 0 and 2." << endl;
+					attempts++;
+					continue; // Retry without incrementing attempts further
+				}
+				userList[i].setType(actionUser, newType);
+				
+				cout << "Enter auto top-up - 0(Inactive) or 1(Active): ";
+				cin >> newTopup;
+				if (!isValidAutoTopup(newTopup)) {
+					cout << "Invalid auto top-up value. Please enter 0 or 1." << endl;
+					attempts++;
+					continue; // Retry without incrementing attempts further
+				}
+				userList[i].setAutoTopup(actionUser, newTopup);
+				cout << "Your data have been updated.";
+				return;
+			}
 		}
 	}
-	cout << "User not found: " << userID << endl;
-	return "false";
 }
 
-int findUserIndex(string userID) {
-	// Iterate through the userList to find the targetID
-	for (int i = 0; i < userList.size(); i++) {
-		if (userList[i].getUserID() == userID) {
-			return i;
-		}
-	}
-	cout << "User not found: " << userID << endl;
-	return 0;
-}
+//[4.4]
+void Q4() {}
 
-void Q4()
+
+// [4] User Menu
+void enterUserView()
 {
 	char action;
 	string targetID;
@@ -688,7 +734,6 @@ void Q4()
 			return;
 		}
 		else {
-			cout << "Action for User ID:" << userIndex << endl;
 			cout << "\n\n";
 			cout << "Action for User ID:" << actionUser << endl;
 		}
@@ -708,7 +753,7 @@ void Q4()
 		switch (action) {
 		case '1': aiServiceMenu(userIndex); break;
 		case '2': Q2(); break;
-		case '3': Q3(); break;
+		case '3': editProfile(actionUser); break;
 		case '4': Q4(); break;
 		case '5':endProgram = true;
 			break;
@@ -720,9 +765,7 @@ void Q4()
 	return;
 }
 
-
-
-
+// [5]
 void showSystemUsageSummary()
 {
 	if (userList.empty())
@@ -774,6 +817,7 @@ void showSystemUsageSummary()
 	cout << left << setw(20) << "The total money paid for buying tokens:" << (freq[0] + freq[5]) * 2 << endl;
 }
 
+// [6]
 void credits() // Credits and Exit
 {
 	char userInput;
@@ -813,6 +857,9 @@ void credits() // Credits and Exit
 	}
 }
 
+/* -------------------- Main Function --------------------*/
+
+/* -------------------- Main Menu --------------------*/
 int main()
 {
 	char prog_choice;
@@ -845,7 +892,9 @@ int main()
 		case '3':
 			editUser();
 			break;
-		case '4': Q4(); break;
+		case '4':
+			enterUserView();
+			break;
 		case '5':
 			showSystemUsageSummary();
 			break;
@@ -867,3 +916,5 @@ int main()
 	cout << "System terminates. Good bye!" << endl;
 	return 0;
 }
+
+/* -------------------- Main Menu --------------------*/
