@@ -973,6 +973,7 @@ void credits() // Credits and Exit
 			cout << left << setw(18) << "LAM Wai Ha" << "\t24049348S\t102" << endl;
 			cout << left << setw(18) << "WONG Sze Wun" << "\t24059631S\t102" << endl
 					 << endl;
+			return;
 		}
 
 		else if (userInput == 'n' || userInput == 'N')
