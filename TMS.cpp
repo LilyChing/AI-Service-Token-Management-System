@@ -204,7 +204,7 @@ void displayData(vector<User> array)
 	}
 }
 
-string findUserID(const string &userID)
+string findUserID(string userID)
 {
 	// Iterate through the userList to find the targetID
 	for (int i = 0; i < userList.size(); i++)
@@ -291,7 +291,6 @@ void editUser()
 	for (int i = 0; i < userList.size(); i++) {
 		if (userList[i].getUserID() == targetID) {
 			found = true;
-			cout << "User found:\n";
 			userList[i].displayDeleteInfo(); // Display user information
 
 			// Confirm deletion
