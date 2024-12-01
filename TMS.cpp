@@ -546,7 +546,7 @@ void predictiveAnalysis(User user)
 			user.setTransactionHistory(autoUpAmt, 5);
 
 			cout << "Insuffient token. $" << autoUpAmt * 2 << "have been charged for auto top-up " << autoUpAmt << " tokens." << endl;
-			cout << "Remaining: " << userToken + autoUpAmt - task * 10 << " token(s)." << endl;
+			cout << "Original balance : " << orginToken << " token(s). Remaining: " << userToken + autoUpAmt - task * 10 << " token(s)." << endl;
 			// transfer info to transaction acct
 			user.setTransactionHistory(autoUpAmt, 5);
 			user.setTransactionHistory(10 * task, 3);
@@ -635,7 +635,7 @@ void nlp(User user)
 		{
 			((totalcost - userToken) % 10) == 0 ? autoToptoken = (totalcost - userToken) / 10 : autoToptoken = (totalcost - userToken) / 10 + 10;
 			cout << "Insuffient token. $" << autoToptoken * 2 << "have been charged for auto top-up " << autoToptoken << " tokens." << endl;
-			cout << "Remaining: " << userToken + autoToptoken - totalcost << " token(s)." << endl;
+			cout << "Original balance : " << orginToken << " token(s). Remaining : " << userToken + autoToptoken - totalcost << " token(s)." << endl;
 
 			user.setTransactionHistory(autoToptoken, 5);
 			user.setTransactionHistory(totalcost, 4);
