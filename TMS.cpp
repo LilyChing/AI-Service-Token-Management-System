@@ -451,12 +451,22 @@ string findUserID(const string& userID) {
     // Iterate through the userList to find the targetID
     for (int i = 0; i < userList.size(); i++) {
         if (userList[i].getUserID() == userID) {
-            cout << "User found: " << userID << endl;
             return userID;
         }
     }
     cout << "User not found: " << userID << endl;
     return "false";
+}
+
+int findUserIndex(string userID) {
+    // Iterate through the userList to find the targetID
+    for (int i = 0; i < userList.size(); i++) {
+        if (userList[i].getUserID() == userID) {
+            return i;
+        }
+    }
+    cout << "User not found: " << userID << endl;
+    return 0;
 }
 
 void Q4()
@@ -473,14 +483,17 @@ void Q4()
     cin >> targetID;
 
 	do{
-    string userCheck = findUserID(targetID);
-    if (userCheck == "false") {
+    string actionUser = findUserID(targetID); // actionUser -> UserID
+	int userIndex = findUserIndex(targetID); // userIndex -> Index
+
+    if (actionUser == "false") {
         cout << "User not found! Exiting to menu..." << endl;
         endProgram = true;
         return;
     } else {
+		cout << "Action for User ID:" << userIndex << endl;
 		cout << "\n\n";
-        cout << "Action for User ID:" << userCheck << endl;
+        cout << "Action for User ID:" << actionUser << endl;
     }
 
 	cout << "*****User View Menu*****" << endl;
