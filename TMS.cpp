@@ -8,22 +8,20 @@ using namespace std;
 class Transaction
 {
 public:
-	Transaction(int currentToken) {
-		originalToken = currentToken;
+	Transaction() {
 		TokenchangeAmount = 0;
 		moneySpent = 0;
 		TokenUsage = "default";
 	}
 
-	Transaction(int currentToken, int Tokenchange, int money, string usage) {
-		originalToken = currentToken;
-		TokenchangeAmount = Tokenchange;
-		moneySpent = money;
+	Transaction(int tokenchange, string usage) {
+
+		TokenchangeAmount = tokenchange;
+		moneySpent = tokenchange * 2;
 		TokenUsage = usage;
 	}
 
 private:
-	int originalToken;
 	int TokenchangeAmount;
 	int moneySpent;
 	string TokenUsage;
@@ -37,10 +35,10 @@ public:
 		userID = uid;
 		type = u_type; // 0 refers to Trial , 1 refers to Full, 2 refers to Student
 		tokenBalance = u_tokenBalance;
+		originalToken = u_tokenBalance;
 		autoTopup = u_autoTopUp; // autoTopUp 0 refers to No, 1 refers to include auto top up
 		isDeleted = 0;					 // isDeleted  0 refers to exists, 1 refers to deleted
 		money = 100;
-		transactionHistory.push_back(Transaction(u_tokenBalance));
 		endProgram = false;
 	}
 
@@ -104,7 +102,7 @@ public:
 	{
 		if (money > token * 2)
 		{
-			setTransactionHistory(tokenBalance, token, token * 2, "Purchase Tokens");
+			setTransactionHistory(token, "Purchase Tokens");
 			// add Token
 			tokenBalance += token;
 			// money -= token * 2;
@@ -123,8 +121,8 @@ public:
         << "Auto Top-up: " << (getAutoTopup() ? "Yes" : "No") << "\n";
 	}
 
-	void setTransactionHistory(int currentToken, int Tokenchange, int money, string usage) {
-		transactionHistory.push_back(Transaction(currentToken, Tokenchange, money, usage));
+	void setTransactionHistory(int tokenchange, string usage) {
+		transactionHistory.push_back(Transaction(tokenchange, usage));
 	}
 
 	vector<Transaction> getTransactionHistory() {
@@ -138,6 +136,7 @@ private:
 	int autoTopup;
 	int isDeleted;
 	int money; // cash balance
+	int originalToken;
 	int totalMoneyPaidForTokens;
 	vector<Transaction> transactionHistory;
 	bool endProgram;
