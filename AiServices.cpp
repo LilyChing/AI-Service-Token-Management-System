@@ -44,9 +44,10 @@ void imageRecognition(User user)
   if (userToken < payment)
   {
     int diff = payment - userToken;
-    int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
+    int topUp = diff % 10 == 0 ? diff : diff / 10 + 10; // topUp refers to times of top up 20 token
     // autoTopUp
     // code to implement
+    user.purchaseToken(topUp);
   }
   userToken -= payment;
   cout << "\nImage has been recognized successfully." << endl;
@@ -103,9 +104,10 @@ void speechToText(User user)
   if (userToken < payment)
   {
     int diff = payment - userToken;
-    int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
+    int topUp = diff % 10 == 0 ? diff : diff / 10 + 10; // topUp refers to times of top up 20 token
     // autoTopUp
     // code to implement
+    user.purchaseToken(topUp);
   }
   userToken -= payment;
   cout << "\nText has been generated successfully." << endl;
@@ -151,9 +153,10 @@ void predictiveAnalysis(User user)
   if (userToken < payment)
   {
     int diff = payment - userToken;
-    int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
+    int topUp = diff % 10 == 0 ? diff : diff / 10 + 10; // topUp refers to times of top up 20 token
     // autoTopUp
     // code to implement
+    user.purchaseToken(topUp);
   }
   userToken -= payment;
   cout << "\nPredicitive Analysis has been generated successfully." << endl;
@@ -210,9 +213,10 @@ void NLP(User user)
   if (userToken < payment)
   {
     int diff = payment - userToken;
-    int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
+    int topUp = diff % 10 == 0 ? diff : diff / 10 + 10; // topUp refers to times of top up 20 token
     // autoTopUp
     // code to implement
+    user.purchaseToken(topUp);
   }
   userToken -= payment;
   cout << "\nNatural Language Processing has been generated successfully." << endl;
