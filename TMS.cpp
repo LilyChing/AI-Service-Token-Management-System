@@ -200,7 +200,7 @@ void showUserRecords()
 	displayData(userList);
 }
 
-void Q3(){
+void editUser(){
     string targetID;
 
     cout << "Enter the ID to search for: ";
@@ -507,7 +507,7 @@ int main()
 			break;
 			break;
 		case '3':
-			Q3();
+			editUser();
 			break;
 		// case '4': Q4(); break;
 		case '5':
