@@ -5,15 +5,33 @@
 // #include <algorithm>
 using namespace std;
 
+class Transaction
+{
+public:
+	Transaction(int currentToken) {
+		originalToken = currentToken;
+		TokenchangeAmount = 0;
+		moneySpent = 0;
+		TokenUsage = "default";
+	}
+
+	Transaction(int currentToken, int Tokenchange, int money, string usage) {
+		originalToken = currentToken;
+		TokenchangeAmount = Tokenchange;
+		moneySpent = money;
+		TokenUsage = usage;
+	}
+
+private:
+	int originalToken;
+	int TokenchangeAmount;
+	int moneySpent;
+	string TokenUsage;
+};
+
 class User
 {
 public:
-	User()
-	{
-		userID = "";
-		isDeleted = 0; // isDeleted  0 refers to exists, 1 refers to deleted
-		endProgram = false;
-	}
 	User(string uid, int u_type, int u_tokenBalance, int u_autoTopUp)
 	{
 		userID = uid;
@@ -22,6 +40,7 @@ public:
 		autoTopup = u_autoTopUp; // autoTopUp 0 refers to No, 1 refers to include auto top up
 		isDeleted = 0;					 // isDeleted  0 refers to exists, 1 refers to deleted
 		money = 100;
+		transactionHistory.push_back(Transaction(u_tokenBalance));
 		endProgram = false;
 	}
 
@@ -85,6 +104,7 @@ public:
 	{
 		if (money > token * 2)
 		{
+			setTransactionHistory(tokenBalance, token, token * 2, "Purchase Tokens");
 			// add Token
 			tokenBalance += token;
 			// money -= token * 2;
@@ -103,7 +123,13 @@ public:
         << "Auto Top-up: " << (getAutoTopup() ? "Yes" : "No") << "\n";
 	}
 
+	void setTransactionHistory(int currentToken, int Tokenchange, int money, string usage) {
+		transactionHistory.push_back(Transaction(currentToken, Tokenchange, money, usage));
+	}
 
+	vector<Transaction> getTransactionHistory() {
+		return transactionHistory;
+	}
 
 private:
 	string userID;
@@ -112,6 +138,8 @@ private:
 	int autoTopup;
 	int isDeleted;
 	int money; // cash balance
+	int totalMoneyPaidForTokens;
+	vector<Transaction> transactionHistory;
 	bool endProgram;
 };
 
@@ -124,14 +152,6 @@ bool isValidTokenBalance(int balance) {
 bool isValidAutoTopup(int topup) {
 	return topup == 0 || topup == 1; // Assuming valid top-up values are 0 or 1
 }
-
-class Transaction
-{
-public:
-	// Transaction();
-
-private:
-};
 
 bool endProgram = false;
 vector<User> userList;
@@ -267,7 +287,7 @@ for (int i = 0; i < userList.size(); i++) {
 	}
 }
 
-void imageRecognition()
+void imageRecognition(User user)
 {
 	// The 2D array refers to the charges according to different scenario
 	// [0] refers to Under 3MB
@@ -405,7 +425,7 @@ void aiServiceMenu()
 		switch (action)
 		{ // function name for ACTION need to revise
 		case '1':
-			imageRecognition();
+			//imageRecognition();
 			break;
 		case '2':
 			speechToText();
