@@ -410,9 +410,9 @@ void aiServiceMenu()
 		case '2':
 			speechToText();
 			break;
-		case '3':
-			aiServiceMenu();
-			break;
+		// case '3':
+		//	aiServiceMenu();
+		//	break;
 		// case '4': Q4(); break;
 		case '5':
 			endProgram = true;
@@ -424,6 +424,54 @@ void aiServiceMenu()
 	} while (action != '5' || !endProgram);
 	return;
 }
+
+void Q1(){
+	imageRecognition();
+	speechToText();
+}
+
+void Q2(){}
+void Q3(){}
+void Q4()
+{
+	char action;
+	if (userList.empty())
+	{
+		cout << "You have not yet load starting data! Returning to menu...";
+		return;
+	}
+	do{
+	cout << "\n\n";
+	cout << "Action for User ID : " << endl;
+	cout << "*****User View Menu*****" << endl;
+	cout << "[1] Select AI Service" << endl;
+	cout << "[2] Purchase Tokens" << endl;
+	cout << "[3] Edit Profile" << endl;
+	cout << "[4] Show Transaction History" << endl;
+	cout << "[5] Return to Main Menu" << endl;
+	cout << "**************************" << endl;
+	cout << "Option(1 - 5) :";
+	cin >> action;
+	cout << "\n\n";
+
+	
+	switch (action) {
+	case '1': aiServiceMenu(); break;
+	case '2': Q2(); break;
+	case '3': Q3(); break;
+	case '4': Q4(); break;
+	case '5':endProgram = true;
+		break;
+		default:
+		cout << "No such Option " << action << "\n\n";
+		break;
+	}
+	}while (action != '5' || !endProgram);
+	return;
+}
+
+
+
 
 void Q5()
 {
@@ -500,7 +548,7 @@ int main()
 		case '3':
 			editUser();
 			break;
-		// case '4': Q4(); break;
+		case '4': Q4(); break;
 		case '5':
 			Q5();
 			break;
