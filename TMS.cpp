@@ -81,6 +81,10 @@ public:
 		return money;
 	}
 
+	int getOriginalToken() {
+		return originalToken;
+	}
+
 	void credit(int amount)
 	{
 		money += amount;
@@ -790,8 +794,9 @@ void showUserTransactionSummary(User& user)
 		return;
 	}
 
+	int totalMoneyPaid = 0;
 	cout << "Transaction History for User ID: " << user.getUserID() << endl;
-	cout << left << setw(20) << "Token Change" << setw(30) << "Usage Type" << setw(20) << "Money Spent" << endl;
+	cout << left << setw(20) << "Token Change" << setw(30) << "Usage Type" << setw(20) << "Tokens spent" << setw(20) << "Money Spent" << endl;
 
 	for (size_t j = 0; j < tran.size(); j++)
 	{
@@ -802,6 +807,7 @@ void showUserTransactionSummary(User& user)
 		{
 		case 0:
 			cout << "Purchase Tokens";
+			totalMoneyPaid += tran[j].getMoneySpent();
 			break;
 		case 1:
 			cout << "Image Recognition";
@@ -813,18 +819,23 @@ void showUserTransactionSummary(User& user)
 			cout << "Predictive Analysis";
 			break;
 		case 4:
-			cout << "Natural Language Processing (NLP)";
+			cout << "Natural Language Processing";
 			break;
 		case 5:
 			cout << "Auto Top-Up";
+			totalMoneyPaid += tran[j].getMoneySpent();
 			break;
 		default:
 			cout << "Unknown Usage";
 			break;
 		}
-
+		cout << setw(20) << tran[j].getTokenchange();
 		cout << setw(20) << tran[j].getMoneySpent() << endl;
 	}
+		cout << left << setw(50) << "original token balance" << setw(20) << user.getOriginalToken() << endl;
+		cout << left << setw(50) << "final token balance" << setw(20) << user.getTokenBalance() << endl;
+		cout << left << setw(50) << "the change in token balance" << setw(20) << (user.getOriginalToken() - user.getTokenBalance()) << endl;
+		cout << left << setw(50) << "TOTAL money paid on buying" << setw(20) << totalMoneyPaid << endl;
 }
 
 // [4] User Menu
