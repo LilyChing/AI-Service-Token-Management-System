@@ -425,11 +425,6 @@ void aiServiceMenu()
 	return;
 }
 
-void Q1(){
-	imageRecognition();
-	speechToText();
-}
-
 void Q2(){}
 void Q3(){}
 void Q4()
