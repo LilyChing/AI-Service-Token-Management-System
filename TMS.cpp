@@ -57,7 +57,6 @@ public:
 		tokenBalance = u_tokenBalance;
 		originalToken = u_tokenBalance;
 		autoTopup = u_autoTopUp; // autoTopUp 0 refers to No, 1 refers to include auto top up
-		isDeleted = 0;					 // isDeleted  0 refers to exists, 1 refers to deleted
 		money = 100;
 		endProgram = false;
 	}
@@ -81,11 +80,6 @@ public:
 	int getAutoTopup()
 	{
 		return autoTopup;
-	}
-
-	int getIsDeleted()
-	{
-		return isDeleted;
 	}
 
 	int getMoney()
@@ -113,11 +107,6 @@ public:
 	{
 		userID = userID;
 		autoTopup = topup;
-	}
-
-	void deleteUser()
-	{
-		isDeleted = 1;
 	}
 
 	void purchaseToken(int token)
@@ -171,7 +160,6 @@ private:
 	int type;
 	int tokenBalance;
 	int autoTopup;
-	int isDeleted;
 	int money; // cash balance
 	int originalToken;
 	int totalMoneyPaidForTokens;
@@ -299,11 +287,9 @@ void editUser()
 
 	bool found = false;
 
-	// Iterate through the userList to find the targetID
-	for (int i = 0; i < userList.size(); i++)
-	{
-		if (userList[i].getUserID() == targetID)
-		{
+	// For loop the userList to find the targetID
+	for (int i = 0; i < userList.size(); i++) {
+		if (userList[i].getUserID() == targetID) {
 			found = true;
 			cout << "User found:\n";
 			userList[i].displayDeleteInfo(); // Display user information
@@ -795,8 +781,7 @@ void editProfile(string actionUser)
 	}
 }
 
-
-//[4.4]
+// [4.4]
 void Q4() {}
 
 // [4] User Menu
