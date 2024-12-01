@@ -204,7 +204,7 @@ void displayData(vector<User> array)
 	}
 }
 
-string findUserID(const string &userID)
+string findUserID(string userID)
 {
 	// Iterate through the userList to find the targetID
 	for (int i = 0; i < userList.size(); i++)
