@@ -83,15 +83,13 @@ public:
 		money -= amount;
 	}
 
-	void setType(string userID, int accType)
+	void setType(int accType)
 	{
-		userID = userID;
 		type = accType;
 	}
 
-	void setAutoTopup(string userID, int topup)
+	void setAutoTopup(int topup)
 	{
-		userID = userID;
 		autoTopup = topup;
 	}
 
@@ -117,10 +115,10 @@ public:
 	}
 
 	void displayDeleteInfo() {
-    cout << "User ID: " << getUserID() << "\n"
-        << "User Type: " << getType() << "\n"
-        << "Token Balance: " << getTokenBalance() << "\n"
-        << "Auto Top-up: " << (getAutoTopup() ? "Yes" : "No") << "\n";
+		cout << "User ID: " << getUserID() << "\n"
+			<< "User Type: " << getType() << "\n"
+			<< "Token Balance: " << getTokenBalance() << "\n"
+			<< "Auto Top-up: " << (getAutoTopup() ? "Yes" : "No") << "\n";
 	}
 
 	void setTransactionHistory(int tokenchange, string usage) {
@@ -169,10 +167,10 @@ void displayData(vector<User> array)
 
 void initializeUser()
 {
-	const string userID[] = {"SkyWalker", "Ocean123", "Forest99", "Valley777", "Desert2022", "River456", "Blaze2023", "Meadow888", "Galaxy", "Storn2024"};
-	const int type[] = {0, 0, 0, 1, 1, 1, 1, 2, 2, 2};
-	const int tokenBalance[]{20, 35, 6, 10, 25, 20, 100, 40, 15, 30};
-	const int autoTopup[]{0, 0, 1, 1, 0, 1, 0, 1, 1, 0};
+	const string userID[] = { "SkyWalker", "Ocean123", "Forest99", "Valley777", "Desert2022", "River456", "Blaze2023", "Meadow888", "Galaxy", "Storn2024" };
+	const int type[] = { 0, 0, 0, 1, 1, 1, 1, 2, 2, 2 };
+	const int tokenBalance[]{ 20, 35, 6, 10, 25, 20, 100, 40, 15, 30 };
+	const int autoTopup[]{ 0, 0, 1, 1, 0, 1, 0, 1, 1, 0 };
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -181,7 +179,7 @@ void initializeUser()
 	displayData(userList);
 }
 
-void swap(string &a, string &b)
+void swap(string& a, string& b)
 {
 	string temp = a;
 	a = b;
@@ -209,82 +207,84 @@ void showUserRecords()
 	displayData(userList);
 }
 
-void editUser(){
-	if (userList.empty()){
+void editUser() {
+	if (userList.empty()) {
 		cout << "You have not yet load starting data! Returning to menu...";
 		return;
 	}
-    string targetID;
+	string targetID;
 
-    cout << "Enter the ID to search for: ";
-    cin >> targetID;
+	cout << "Enter the ID to search for: ";
+	cin >> targetID;
 
-    bool found = false;
+	bool found = false;
 
-    // Iterate through the userList to find the targetID
-for (int i = 0; i < userList.size(); i++) {
-        if (userList[i].getUserID() == targetID) {
-            found = true;
-            cout << "User found:\n";
-            userList[i].displayDeleteInfo(); // Display user information
+	// Iterate through the userList to find the targetID
+	for (int i = 0; i < userList.size(); i++) {
+		if (userList[i].getUserID() == targetID) {
+			found = true;
+			cout << "User found:\n";
+			userList[i].displayDeleteInfo(); // Display user information
 
-            // Confirm deletion
-            string confirmation;
-            cout << "Do you really want to delete this user? (yes/no): ";
-            cin >> confirmation;
+			// Confirm deletion
+			string confirmation;
+			cout << "Do you really want to delete this user? (yes/no): ";
+			cin >> confirmation;
 
-            if (confirmation == "yes" || confirmation == "Yes" || confirmation == "Y"|| confirmation == "y") {
-                userList.erase(userList.begin() + i); // Remove the found user
-                cout << "User deleted successfully." << endl;
-            } else if(confirmation == "no" || confirmation == "No" || confirmation == "N"|| confirmation == "n"){
-                cout << "Deletion cancelled." << endl;
-            } else{
+			if (confirmation == "yes" || confirmation == "Yes" || confirmation == "Y" || confirmation == "y") {
+				userList.erase(userList.begin() + i); // Remove the found user
+				cout << "User deleted successfully." << endl;
+			}
+			else if (confirmation == "no" || confirmation == "No" || confirmation == "N" || confirmation == "n") {
+				cout << "Deletion cancelled." << endl;
+			}
+			else {
 				cout << "Please input again." << endl;
 			}
-            return; // Exit the function after handling deletion
-        }
-    }
+			return; // Exit the function after handling deletion
+		}
+	}
 
-    if (!found) {
-        // Prompt for new user details with retry mechanism
-        int newType, newBalance, newTopup;
-        int attempts = 0;
+	if (!found) {
+		// Prompt for new user details with retry mechanism
+		int newType, newBalance, newTopup;
+		int attempts = 0;
 
-        while (attempts < 3) {
-            cout << "User not found. Please enter details for this user." << endl;
+		while (attempts < 3) {
+			cout << "User not found. Please enter details for this user." << endl;
 
-            cout << "Enter user type (0, 1, 2): ";
-            cin >> newType;
-            if (!isValidUserType(newType)) {
-                cout << "Invalid user type. Please enter a value between 0 and 2." << endl;
-                attempts++;
-                continue; // Retry without incrementing attempts further
-            }
+			cout << "Enter user type (0, 1, 2): ";
+			cin >> newType;
+			if (!isValidUserType(newType)) {
+				cout << "Invalid user type. Please enter a value between 0 and 2." << endl;
+				attempts++;
+				continue; // Retry without incrementing attempts further
+			}
 
-            cout << "Enter token balance: ";
-            cin >> newBalance;
-            if (!isValidTokenBalance(newBalance)) {
-                cout << "Invalid token balance. It cannot be negative." << endl;
-                attempts++;
-                continue; // Retry without incrementing attempts further
-            }
+			cout << "Enter token balance: ";
+			cin >> newBalance;
+			if (!isValidTokenBalance(newBalance)) {
+				cout << "Invalid token balance. It cannot be negative." << endl;
+				attempts++;
+				continue; // Retry without incrementing attempts further
+			}
 
-            cout << "Enter auto top-up (0 or 1): ";
-            cin >> newTopup;
-            if (!isValidAutoTopup(newTopup)) {
-                cout << "Invalid auto top-up value. Please enter 0 or 1." << endl;
-                attempts++;
-                continue; // Retry without incrementing attempts further
-            }
+			cout << "Enter auto top-up (0 or 1): ";
+			cin >> newTopup;
+			if (!isValidAutoTopup(newTopup)) {
+				cout << "Invalid auto top-up value. Please enter 0 or 1." << endl;
+				attempts++;
+				continue; // Retry without incrementing attempts further
+			}
 
-            // If all inputs are valid, create a new User and add to userList
-            userList.push_back(User(targetID, newType, newBalance, newTopup));
-            cout << "New user created with ID: " << targetID << endl;
-            return; // Exit after successful creation
-        }
+			// If all inputs are valid, create a new User and add to userList
+			userList.push_back(User(targetID, newType, newBalance, newTopup));
+			cout << "New user created with ID: " << targetID << endl;
+			return; // Exit after successful creation
+		}
 
-        // If reached here, it means 3 attempts failed
-        cout << "Too many invalid attempts. No user added." << endl;
+		// If reached here, it means 3 attempts failed
+		cout << "Too many invalid attempts. No user added." << endl;
 	}
 }
 
@@ -293,7 +293,7 @@ void imageRecognition(User user)
 	// The 2D array refers to the charges according to different scenario
 	// [0] refers to Under 3MB
 	// [1] refers to Over 3MB
-	int charges[2][3] = {{5, 5, 4}, {-1, 8, 7}};
+	int charges[2][3] = { {5, 5, 4}, {-1, 8, 7} };
 	double imgSize = 0.0;
 
 	// 假設用家資料
@@ -331,32 +331,35 @@ void imageRecognition(User user)
 	{
 		int diff = payment - userToken;
 		int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
-																														// autoTopUp
-																														// code to implement
+
+		user.setTransactionHistory(topUp, "Auto TopUp");																												// autoTopUp
+		// code to implement
 	}
 	userToken -= payment;
 	cout << "\nImage has been recognized successfully." << endl;
 	cout << "Thank you for using AI Service - Image Recognition" << endl;
-	cout << "Remaining Token: " << userToken << endl
-			 << endl;
+	cout << "Remaining Token: " << userToken << endl;
+
+	user.setTransactionHistory(payment, "Image Recognition");
+
 	cout << "Enter \'q\' to return to user interface: ";
 	char operation;
 	cin >> operation;
 	return;
 }
 
-void speechToText()
+void speechToText(User user)
 {
 	// The 2D array refers to the charges according to different scenario
 	// [0] refers to fee for first 3 minutes
 	// [1] refers to fee for after 3 minutes
-	int charges[2] = {2, 3};
+	int charges[2] = { 2, 3 };
 	int audioLength;
 
 	// 假設用家資料
-	int userType = 0;	 // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
-	int autoTopUp = 1; // 0 refers to false 1 refers to true
-	int userToken = 0;
+	int userType = user.getType();			 // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
+	int autoTopUp = user.getAutoTopup(); // 0 refers to false 1 refers to true
+	int userToken = user.getTokenBalance();
 	// Code to implement
 	cout << "Thank you for using Sppech to Text Transcription!" << endl;
 	cout << "Please enter the audio length of your speech: ";
@@ -390,19 +393,195 @@ void speechToText()
 	{
 		int diff = payment - userToken;
 		int topUp = diff % 20 == 0 ? diff / 20 : diff / 20 + 1; // topUp refers to times of top up 20 token
-																														// autoTopUp
-																														// code to implement
+
+		user.setTransactionHistory(topUp, "Auto TopUp");																												// autoTopUp
+		// code to implement
 	}
 	userToken -= payment;
+	user.setTransactionHistory(payment, "Text Transcription");
+
 	cout << "\nText has been generated successfully." << endl;
 	cout << "Thank you for using AI Service - Speech to Text Transcription!" << endl;
-	cout << "Remaining Token: " << userToken << endl
-			 << endl;
+	cout << "Remaining Token: " << userToken << endl;
 	cout << "Enter \'q\' to return to user interface: ";
 	char operation;
 	cin >> operation;
 	return;
 }
+
+
+void predictiveAnalysis(User user) {
+
+	// call User information
+	int userType = user.getType();       // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
+	int autoTopUp = user.getAutoTopup(); // 0 refers to false 1 refers to true
+	int userToken = user.getTokenBalance();
+
+
+	int price = 10;
+	int task = 0;
+
+	cout << "Thank you for using the Predictive Analysis!\n";
+	cout << "Price : 10 tokens per prediction task\n";
+	cout << "Please enter the number of prediction task:";
+	cin >> task;
+
+	// check any invalid input: (1) check input type; (2) out of range; (3)not enough token but Auto Topup; (4) no enough token and no auto Top-up
+
+		// (1) need to check if any non-integer input after 1st integer input, to find any function to checked if char after integer input
+	if (cin.fail()) {
+		cout << "Invalid input." << endl;
+		cin.clear(); // Clear the error state
+		cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the rest of the line
+		return;
+	}
+
+
+	// checking (2)
+	if (task <= 0)
+	{
+		cout << "Invalid input. Please input again.";
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		return;
+	}
+
+	// checking (3) & (4)
+
+	if (userToken < task * 10) {
+
+		if (autoTopUp == 0) {
+			cout << "Insuffient token." << endl;
+			cout << "Remaining token: " << userToken << endl;
+			cout << "Please try again after purchasing for more tokens.";
+			return;
+		}
+		else {
+
+			int extraToken = (10 * task - userToken);
+			int autoUpAmt = 0;
+
+			(extraToken % 10 == 0) ? autoUpAmt = extraToken : autoUpAmt = extraToken + (10 - extraToken % 10);
+
+			user.setTransactionHistory(autoUpAmt, "AutoTopUp");
+
+			cout << "Insuffient token. $" << autoUpAmt * 2 << "have been charged for auto top-up " << autoUpAmt << " tokens." << endl;
+			cout << "Remaining: " << userToken + autoUpAmt - task * 10 << " token(s)." << endl;
+			// transfer info to transaction acct
+			user.setTransactionHistory(autoUpAmt, "Auto TopUp");
+			user.setTransactionHistory(10 * task, "Predictive Analysis");
+			return;
+		}
+	}
+	else {
+
+		cout << "Your subscription to the predictive analysis service has been successfully activated." << endl;
+		cout << "Thank you for using AI Service - Predictive Analysis!" << endl;
+		cout << task * 10 << " tokens have been deducted." << endl;
+		cout << "Remaining: " << userToken - task * 10 << "tokens" << endl;
+
+		// transfer info to transaction acct
+		user.setTransactionHistory(10 * task, "Predictive Analysis");
+
+		cout << "Press any button to return to the User View Menu.";
+		cin.get();
+		return; // & return to user view menu
+	}
+}
+
+
+
+void nlp(User user) {
+
+	int userType = user.getType();       // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
+	int autoTopUp = user.getAutoTopup(); // 0 refers to false 1 refers to true
+	int userToken = user.getTokenBalance();
+
+
+	int numberText = 0;
+	int autoToptoken = 0; // no. of token under auto Top-up
+
+	cout << "Thank you for using the Natural Language Processing!\n";
+	cout << "Price : 1 token for every 500 characters \n";
+	cout << "Please enter the length of text (Max. 2500 characters for trial account):";
+	cin >> numberText;
+
+	// check any invalid input: (1) check input type; (2) out of range; (2a) Trial account and over 2500 char; (3)not enough token but Auto Topup; (4) no enough token and no auto Top-up
+
+	// (1) need to check if any non-integer input after 1st integer input, to find any function to checked if char after integer input
+	if (cin.fail()) {
+		cout << "Invalid input." << endl;
+		cin.clear(); // Clear the error state
+		cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore the rest of the line
+		return;
+	}
+
+
+	// checking (2)
+	if (numberText <= 0)
+	{
+		cout << "Invalid input." << endl;
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		return;
+	}
+
+
+	// checking (2a)
+	if (numberText > 2500 && userType == 0)
+	{
+		cout << "Invalid input. Max. 2500 for trial account." << endl;
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		return;
+	}
+
+
+
+
+	// checking (3) & (4)
+
+	int totalcost = 0;
+
+	numberText % 500 == 0 ? (totalcost = numberText / 500) : (totalcost = numberText / 500 + 1);
+
+	if (userToken < totalcost) {
+
+		if (autoTopUp == 0) {
+			cout << "Insuffient token." << endl;
+			cout << "Remaining token: " << userToken << endl;
+			cout << "Please try again after purchasing for more tokens." << endl;
+			return; // & return to User view menu
+		}
+		else {
+
+			((totalcost - userToken) % 10) == 0 ? autoToptoken = (totalcost - userToken) / 10 : autoToptoken = (totalcost - userToken) / 10 + 10;
+
+
+			cout << "Insuffient token. $" << autoToptoken * 2 << "have been charged for auto top-up " << autoToptoken << " tokens." << endl;
+			cout << "Remaining: " << userToken + autoToptoken - totalcost << " token(s)." << endl;
+
+			user.setTransactionHistory(autoToptoken, "Auto TopUp");
+			user.setTransactionHistory(totalcost, "Natural Language Processing");
+
+
+			return;
+		}
+	}
+	else {
+
+		cout << totalcost << " tokens have been deducted. Remaining: " << userToken - totalcost << " tokens." << endl;
+		user.setTransactionHistory(totalcost, "Natural Language Processing");
+		return;
+	}
+
+}
+
+
+
+
+
+
 
 void aiServiceMenu()
 {
@@ -431,10 +610,10 @@ void aiServiceMenu()
 		case '2':
 			speechToText();
 			break;
-		// case '3':
-		//	aiServiceMenu();
-		//	break;
-		// case '4': Q4(); break;
+			// case '3':
+			//	aiServiceMenu();
+			//	break;
+			// case '4': Q4(); break;
 		case '5':
 			endProgram = true;
 			break;
@@ -446,59 +625,29 @@ void aiServiceMenu()
 	return;
 }
 
-void Q2(){}
-void editProfile(string actionUser){
-	for (int i = 0; i < userList.size(); i++) {
-		if (userList[i].getUserID() == actionUser) {
-			int newType, newBalance, newTopup;
-			int attempts = 0;
-			while (attempts < 3) {
-				cout << "Change Your Setting" << endl;
-				cout << "Enter your type - 0(Trial), 1(Full), 2(Student): ";
-				cin >> newType;
-
-				if (!isValidUserType(newType)) {
-					cout << "Invalid user type. Please enter a value between 0 and 2." << endl;
-					attempts++;
-					continue; // Retry without incrementing attempts further
-				}
-				userList[i].setType(actionUser, newType);
-				
-				cout << "Enter auto top-up - 0(Inactive) or 1(Active): ";
-				cin >> newTopup;
-				if (!isValidAutoTopup(newTopup)) {
-					cout << "Invalid auto top-up value. Please enter 0 or 1." << endl;
-					attempts++;
-					continue; // Retry without incrementing attempts further
-				}
-				userList[i].setAutoTopup(actionUser, newTopup);
-				cout << "Your data have been updated.";
-				return;
-			}
-		}
-	}
-}
+void Q2() {}
+void Q3() {}
 
 string findUserID(const string& userID) {
-    // Iterate through the userList to find the targetID
-    for (int i = 0; i < userList.size(); i++) {
-        if (userList[i].getUserID() == userID) {
-            return userID;
-        }
-    }
-    cout << "User not found: " << userID << endl;
-    return "false";
+	// Iterate through the userList to find the targetID
+	for (int i = 0; i < userList.size(); i++) {
+		if (userList[i].getUserID() == userID) {
+			return userID;
+		}
+	}
+	cout << "User not found: " << userID << endl;
+	return "false";
 }
 
 int findUserIndex(string userID) {
-    // Iterate through the userList to find the targetID
-    for (int i = 0; i < userList.size(); i++) {
-        if (userList[i].getUserID() == userID) {
-            return i;
-        }
-    }
-    cout << "User not found: " << userID << endl;
-    return 0;
+	// Iterate through the userList to find the targetID
+	for (int i = 0; i < userList.size(); i++) {
+		if (userList[i].getUserID() == userID) {
+			return i;
+		}
+	}
+	cout << "User not found: " << userID << endl;
+	return 0;
 }
 
 void Q4()
@@ -512,45 +661,47 @@ void Q4()
 	}
 
 	cout << "Enter the your User ID: ";
-    cin >> targetID;
+	cin >> targetID;
 
-	do{
-    string actionUser = findUserID(targetID); // actionUser -> UserID
-	int userIndex = findUserIndex(targetID); // userIndex -> Index
+	do {
+		string actionUser = findUserID(targetID); // actionUser -> UserID
+		int userIndex = findUserIndex(targetID); // userIndex -> Index
 
-    if (actionUser == "false") {
-        cout << "User not found! Exiting to menu..." << endl;
-        endProgram = true;
-        return;
-    } else {
+		if (actionUser == "false") {
+			cout << "User not found! Exiting to menu..." << endl;
+			endProgram = true;
+			return;
+		}
+		else {
+			cout << "Action for User ID:" << userIndex << endl;
+			cout << "\n\n";
+			cout << "Action for User ID:" << actionUser << endl;
+		}
+
+		cout << "*****User View Menu*****" << endl;
+		cout << "[1] Select AI Service" << endl;
+		cout << "[2] Purchase Tokens" << endl;
+		cout << "[3] Edit Profile" << endl;
+		cout << "[4] Show Transaction History" << endl;
+		cout << "[5] Return to Main Menu" << endl;
+		cout << "**************************" << endl;
+		cout << "Option(1 - 5) :";
+		cin >> action;
 		cout << "\n\n";
-        cout << "Action for User ID:" << actionUser << endl;
-    }
 
-	cout << "*****User View Menu*****" << endl;
-	cout << "[1] Select AI Service" << endl;
-	cout << "[2] Purchase Tokens" << endl;
-	cout << "[3] Edit Profile" << endl;
-	cout << "[4] Show Transaction History" << endl;
-	cout << "[5] Return to Main Menu" << endl;
-	cout << "**************************" << endl;
-	cout << "Option(1 - 5) :";
-	cin >> action;
-	cout << "\n\n";
 
-	
-	switch (action) {
-	case '1': aiServiceMenu(); break;
-	case '2': Q2(); break;
-	case '3': editProfile(actionUser); break;
-	case '4': Q4(); break;
-	case '5':endProgram = true;
-		break;
+		switch (action) {
+		case '1': aiServiceMenu(); break;
+		case '2': Q2(); break;
+		case '3': Q3(); break;
+		case '4': Q4(); break;
+		case '5':endProgram = true;
+			break;
 		default:
-		cout << "No such Option " << action << "\n\n";
-		break;
-	}
-	}while (action != '5' || !endProgram);
+			cout << "No such Option " << action << "\n\n";
+			break;
+		}
+	} while (action != '5' || !endProgram);
 	return;
 }
 
@@ -573,16 +724,16 @@ void credits() // Credits and Exit
 		if (userInput == 'y' || userInput == 'Y')
 		{
 			cout << endl
-					 << setw(24) << "~ Credit ~" << endl;
+				<< setw(24) << "~ Credit ~" << endl;
 			cout << left << setw(18) << "Name:" << "\tStudent ID:\tClass:" << endl
-					 << endl;
+				<< endl;
 			cout << left << setw(18) << "CHING Yan Lee" << "\t24050083S\t102" << endl;
 			cout << left << setw(18) << "LEE Cheuk Him" << "\t24076812S\t102" << endl;
 			cout << left << setw(18) << "FUNG Ho Ming" << "\t24059970S\t102" << endl;
 			cout << left << setw(18) << "AU-YEUNG Wing Lam" << "\t24063299S\t102" << endl;
 			cout << left << setw(18) << "LAM Wai Ha" << "\t24049348S\t102" << endl;
 			cout << left << setw(18) << "WONG Sze Wun" << "\t24059631S\t102" << endl
-					 << endl;
+				<< endl;
 		}
 
 		else if (userInput == 'n' || userInput == 'N')
@@ -593,7 +744,7 @@ void credits() // Credits and Exit
 		else
 		{
 			cout << endl
-					 << "Wrong input. Only Y/N is accepted. Please retry." << "\n\n";
+				<< "Wrong input. Only Y/N is accepted. Please retry." << "\n\n";
 			cin.clear();
 			cin.ignore(1000000, '\n');
 		}
