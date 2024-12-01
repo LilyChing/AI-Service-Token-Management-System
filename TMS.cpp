@@ -712,7 +712,49 @@ void aiServiceMenu(int userIndex)
 }
 
 // [4.2]
-void Q2() {}
+void tokenPurchase() {
+	const int tokencost = 2;
+	int moneySpent;
+	const int maxInput = 3;
+	bool validInput = false;
+
+	string userID;
+	cout << "Enter the user ID: ";
+	cin >> userID;
+
+	int userIndex = findUserIndex(userID);
+	if (userIndex == -1) {
+		return; // User not found, exit the function
+	}
+
+	// Allow up to maxInput for valid input
+	for (int count = 0; count < maxInput; count++) {
+		cout << "Enter an even integer amount of money to spend on tokens: ";
+		cin >> moneySpent;
+
+		// Check if the input is valid (even and positive)
+		if (moneySpent <= 0 || moneySpent % 2 != 0) {
+			cout << "Invalid input. Please enter a positive even integer." << endl;
+			if (count < maxInput - 1) {
+				cout << "Attempts remaining: " << (maxInput - count - 1) << endl;
+			}
+		}
+		else {
+			// Calculate the number of tokens
+			int tokensPurchased = moneySpent / tokencost;
+
+			// Update the token balance
+			userList[userIndex].purchaseToken(tokensPurchased);
+			userList[userIndex].setTransactionHistory(tokensPurchased, 0); // 0 for token purchase
+
+			cout << "Tokens purchased: " << tokensPurchased << endl;
+			cout << "Current token balance: " << userList[userIndex].getTokenBalance() << "\n\n";
+			validInput = true;
+			break;
+		}
+	}
+}
+
 
 // [4.3]
 void editProfile(string actionUser)
@@ -752,6 +794,7 @@ void editProfile(string actionUser)
 		}
 	}
 }
+
 
 //[4.4]
 void Q4() {}
@@ -804,7 +847,7 @@ void enterUserView()
 			aiServiceMenu(userIndex);
 			break;
 		case '2':
-			Q2();
+			tokenPurchase();
 			break;
 		case '3':
 			editProfile(actionUser);
