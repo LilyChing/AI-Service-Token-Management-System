@@ -83,13 +83,15 @@ public:
 		money -= amount;
 	}
 
-	void setType(int accType)
+	void setType(string userID, int accType)
 	{
+		userID = userID;
 		type = accType;
 	}
 
-	void setAutoTopup(int topup)
+	void setAutoTopup(string userID, int topup)
 	{
+		userID = userID;
 		autoTopup = topup;
 	}
 
@@ -445,7 +447,37 @@ void aiServiceMenu()
 }
 
 void Q2(){}
-void Q3(){}
+void editProfile(string actionUser){
+	for (int i = 0; i < userList.size(); i++) {
+		if (userList[i].getUserID() == actionUser) {
+			int newType, newBalance, newTopup;
+			int attempts = 0;
+			while (attempts < 3) {
+				cout << "Change Your Setting" << endl;
+				cout << "Enter your type - 0(Trial), 1(Full), 2(Student): ";
+				cin >> newType;
+
+				if (!isValidUserType(newType)) {
+					cout << "Invalid user type. Please enter a value between 0 and 2." << endl;
+					attempts++;
+					continue; // Retry without incrementing attempts further
+				}
+				userList[i].setType(actionUser, newType);
+				
+				cout << "Enter auto top-up - 0(Inactive) or 1(Active): ";
+				cin >> newTopup;
+				if (!isValidAutoTopup(newTopup)) {
+					cout << "Invalid auto top-up value. Please enter 0 or 1." << endl;
+					attempts++;
+					continue; // Retry without incrementing attempts further
+				}
+				userList[i].setAutoTopup(actionUser, newTopup);
+				cout << "Your data have been updated.";
+				return;
+			}
+		}
+	}
+}
 
 string findUserID(const string& userID) {
     // Iterate through the userList to find the targetID
@@ -491,7 +523,6 @@ void Q4()
         endProgram = true;
         return;
     } else {
-		cout << "Action for User ID:" << userIndex << endl;
 		cout << "\n\n";
         cout << "Action for User ID:" << actionUser << endl;
     }
@@ -511,7 +542,7 @@ void Q4()
 	switch (action) {
 	case '1': aiServiceMenu(); break;
 	case '2': Q2(); break;
-	case '3': Q3(); break;
+	case '3': editProfile(actionUser); break;
 	case '4': Q4(); break;
 	case '5':endProgram = true;
 		break;
