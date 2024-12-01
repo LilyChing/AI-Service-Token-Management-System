@@ -427,17 +427,43 @@ void aiServiceMenu()
 
 void Q2(){}
 void Q3(){}
+
+string findUserID(const string& userID) {
+    // Iterate through the userList to find the targetID
+    for (int i = 0; i < userList.size(); i++) {
+        if (userList[i].getUserID() == userID) {
+            cout << "User found: " << userID << endl;
+            return userID;
+        }
+    }
+    cout << "User not found: " << userID << endl;
+    return "false";
+}
+
 void Q4()
 {
 	char action;
+	string targetID;
 	if (userList.empty())
 	{
 		cout << "You have not yet load starting data! Returning to menu...";
 		return;
 	}
+
+	cout << "Enter the your User ID: ";
+    cin >> targetID;
+
 	do{
-	cout << "\n\n";
-	cout << "Action for User ID : " << endl;
+    string userCheck = findUserID(targetID);
+    if (userCheck == "false") {
+        cout << "User not found! Exiting to menu..." << endl;
+        endProgram = true;
+        return;
+    } else {
+		cout << "\n\n";
+        cout << "Action for User ID:" << userCheck << endl;
+    }
+
 	cout << "*****User View Menu*****" << endl;
 	cout << "[1] Select AI Service" << endl;
 	cout << "[2] Purchase Tokens" << endl;
