@@ -376,7 +376,7 @@ void imageRecognition(User user)
 	// 假設用家資料
 	int userType = user.getType();			 // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
 	int autoTopUp = user.getAutoTopup(); // 0 refers to false 1 refers to true
-	int userToken = user.getTokenBalance();
+	int userToken = int originToken = user.getTokenBalance();
 	// Code to implement
 	cout << "Thank you for using Image Recognition!" << endl;
 	cout << "Please enter the expected Image Size you would like to recognize: ";
@@ -415,7 +415,7 @@ void imageRecognition(User user)
 	user.useToken(payment);
 	cout << "\nImage has been recognized successfully." << endl;
 	cout << "Thank you for using AI Service - Image Recognition" << endl;
-	cout << "Remaining Token: " << userToken << endl;
+	cout << "Original balance : " << orginToken << " token(s). Remaining Token: " << userToken << endl;
 
 	user.setTransactionHistory(payment, 1);
 
@@ -437,7 +437,7 @@ void speechToText(User user)
 	// 假設用家資料
 	int userType = user.getType();			 // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
 	int autoTopUp = user.getAutoTopup(); // 0 refers to false 1 refers to true
-	int userToken = user.getTokenBalance();
+	int userToken = int originToken = user.getTokenBalance();
 	// Code to implement
 	cout << "Thank you for using Sppech to Text Transcription!" << endl;
 	cout << "Please enter the audio length of your speech: ";
@@ -480,7 +480,7 @@ void speechToText(User user)
 
 	cout << "\nText has been generated successfully." << endl;
 	cout << "Thank you for using AI Service - Speech to Text Transcription!" << endl;
-	cout << "Remaining Token: " << userToken << endl;
+	cout << "Original balance : " << orginToken << " token(s). Remaining Token: " << userToken << endl;
 	cout << "Enter \'q\' to return to user interface: ";
 	char operation;
 	cin >> operation;
@@ -494,7 +494,7 @@ void predictiveAnalysis(User user)
 	// call User information
 	int userType = user.getType();			 // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
 	int autoTopUp = user.getAutoTopup(); // 0 refers to false 1 refers to true
-	int userToken = user.getTokenBalance();
+	int userToken = int originToken = user.getTokenBalance();
 
 	int price = 10;
 	int task = 0;
@@ -559,7 +559,7 @@ void predictiveAnalysis(User user)
 		cout << "Your subscription to the predictive analysis service has been successfully activated." << endl;
 		cout << "Thank you for using AI Service - Predictive Analysis!" << endl;
 		cout << task * 10 << " tokens have been deducted." << endl;
-		cout << "Remaining: " << userToken - task * 10 << "tokens" << endl;
+		cout << "Original balance : " << orginToken << " token(s). Remaining : " << userToken - task * 10 << "tokens" << endl;
 
 		// transfer info to transaction acct
 		user.setTransactionHistory(10 * task, 3);
@@ -576,7 +576,7 @@ void nlp(User user)
 
 	int userType = user.getType();			 // 0 refers to trial, 1 refers to Full Account, 2 refers to Student Account
 	int autoTopUp = user.getAutoTopup(); // 0 refers to false 1 refers to true
-	int userToken = user.getTokenBalance();
+	int userToken = int originToken = user.getTokenBalance();
 
 	int numberText = 0;
 	int autoToptoken = 0; // no. of token under auto Top-up
@@ -646,7 +646,7 @@ void nlp(User user)
 	else
 	{
 
-		cout << totalcost << " tokens have been deducted. Remaining: " << userToken - totalcost << " tokens." << endl;
+		cout << totalcost << " tokens have been deducted.  Original balance: " << orginToken << "token(s).Remaining: " << userToken - totalcost << " tokens." << endl;
 		user.setTransactionHistory(totalcost, 4);
 		return;
 	}
